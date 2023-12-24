@@ -61,7 +61,7 @@ const columns = [
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/patients/update" }>
+            <Link to={"/patients/update/" + params.row.id}>
               <button className="userListEdit">Edit</button>
             </Link>
             <DeleteOutline
