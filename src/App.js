@@ -1,24 +1,29 @@
 import './App.css';
-import SideBar from './components/SideBar';
+import SideBar from './components/SideBar/SideBar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Patients from './pages/Patients';
+import Navbar from './components/NavBar/NavBar';
+import PatientsList from './pages/PatientsList';
 
 function App() {
   return (
     <div>
-      
       <Router>
-      <SideBar />
-        <Routes>
-        <Route path="/patients" element={<Patients />}/>
-       
-        <Route path="/medecins"/>
-        
-        <Route path="/rendez_vous"/>
-        
-        </Routes>
+        <Navbar />
+        <div className="container">
+          <SideBar />
+
+          <Routes>
+            <Route path="/patients" element={<PatientsList />} />
+
+            <Route path="/medecins" />
+
+            <Route path="/rendez_vous" />
+
+          </Routes>
+        </div>
       </Router>
     </div>
+
 
   )
 }
