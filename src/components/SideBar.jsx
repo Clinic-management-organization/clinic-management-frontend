@@ -8,7 +8,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
-
+import { Link } from 'react-router-dom';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -275,29 +275,30 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+  <ListItem disablePadding sx={{ display: 'block' }}>
+    <ListItemButton
+      component={Link}
+      to="/patients"
+      sx={{
+        minHeight: 48,
+        justifyContent: open ? 'initial' : 'center',
+        px: 2.5,
+      }}
+    >
+      <ListItemIcon
+        sx={{
+          minWidth: 0,
+          mr: open ? 3 : 'auto',
+          justifyContent: 'center',
+        }}
+      >
+        <InboxIcon />
+      </ListItemIcon>
+      <ListItemText primary="Inbox" sx={{ opacity: open ? 1 : 0 }} />
+    </ListItemButton>
+  </ListItem>
+  {/* Repeat the above pattern for other links */}
+</List>
         <Divider />
         <List>
           {['All mail', 'Trash', 'Spam'].map((text, index) => (
@@ -324,7 +325,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3}}>
         <DrawerHeader />
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
