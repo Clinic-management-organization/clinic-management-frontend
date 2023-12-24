@@ -6,7 +6,8 @@ import PatientsList from './pages/Patients/PatientsList/PatientsList';
 import PatientAdd from './pages/Patients/addPatient/PatientAdd';
 import MedecinAdd from './pages/Medecins/addMedecin/MedecinAdd';
 import MedecinsList from './pages/Medecins/MedecinList/MedecinsList';
-import PatientRoutes from './routes/PatientRoutes';
+import PatientUpdate from './pages/Patients/updatePatient/PatientUpdate';
+import MedecinUpdate from './pages/Medecins/updateMedecin/MedecinUpdate';
 
 function App() {
   return (
@@ -17,13 +18,16 @@ function App() {
           <SideBar />
 
           <Routes>
-            <Route path="/patients" element={<PatientRoutes />} />
-
+            <Route path="/patients" element={<PatientsList />} />
+            <Route path="/patients/add" element={<PatientAdd />} />
+            <Route path="/patients/update/:id" element={<PatientUpdate/>} />
             <Route path="/medecins" element={<MedecinsList />} />
+            <Route path="/medecins/add" element={<MedecinAdd />} />
+            <Route path="/medecins/update/:id" element={<MedecinUpdate/>} />
+          
 
-            <Route path="/rendez_vous" />
 
-          </Routes>
+        </Routes>
         </div>
       </Router>
     </div>

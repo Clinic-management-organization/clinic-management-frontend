@@ -51,6 +51,7 @@ export const updatePatientByID = async (patientID, patientInfo) => {
 
     try {
         const response = await axios.put(url, { ...patientInfo });
+        console.log(response.data); // Log de la réponse
         return response.data;
     } catch (error) {
         console.error("Error updating patient:", error);

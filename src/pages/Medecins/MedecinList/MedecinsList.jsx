@@ -4,26 +4,28 @@ import { userRows } from "../../../dummyData";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { DataGrid } from '@mui/x-data-grid';
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { deleteMedecinByID, getAllMedecins } from "../../../services/MedecinServices";
 const MedecinsList = () => {
-const [data, setData] = useState(userRows);
-const handleDelete = (id) => {
+  const [data, setData] = useState([]);
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getAllMedecins();
+      console.log("res", res);
+      setData(res);
+    };
+    fetchData();
+  }, []);
+const handleDelete = async (id) =>  {
+  await deleteMedecinByID(id);
+
     setData(data.filter((item) => item.id !== id));
   };
 const columns = [
-    { field: "id", headerName: "ID", width: 90 },
-    // {
-    //   field: "user",
-    //   headerName: "User",
-    //   width: 200,
-    //   renderCell: (params) => {
-    //     return (
-    //       <div className="userListUser">
-    //         <img className="userListImg" src={params.row.avatar} alt="" />
-    //         {params.row.username}
-    //       </div>
-    //     );
-    //   },
-    // },
+  
     { field: "nom", headerName: "Nom", width: 100 },
     {
       field: "prenom",
@@ -63,9 +65,10 @@ const columns = [
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/user/" + params.row.id}>
-              <button className="userListEdit">Edit</button>
-            </Link>
+           <button className="userListEdit" 
+                onClick={() => {
+                  navigate(`update/${params.row.id}`);
+                }}>Edit</button>
             <DeleteOutline
               className="userListDelete"
               onClick={() => handleDelete(params.row.id)}

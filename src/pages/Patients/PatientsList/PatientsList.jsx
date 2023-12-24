@@ -10,6 +10,7 @@ import { deletePatientByID, getAllPatients } from "../../../services/PatientsSer
 
 const PatientsList = () => {
   const [data, setData] = useState([]);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,9 +60,12 @@ const PatientsList = () => {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/patients/update/" + params.row.id}>
-              <button className="userListEdit">Edit</button>
-            </Link>
+           
+              <button className="userListEdit" 
+                onClick={() => {
+                  navigate(`update/${params.row.id}`);
+                }}>Edit</button>
+          
             <DeleteOutline
               className="userListDelete"
               onClick={() => handleDelete(params.row.id)}

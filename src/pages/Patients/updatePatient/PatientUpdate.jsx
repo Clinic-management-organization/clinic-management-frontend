@@ -10,26 +10,35 @@ import {
   
   import React, { useEffect, useState } from 'react';
   import { Toaster, toast } from "react-hot-toast";
+import { getPatientByID, updatePatientByID } from "../../../services/PatientsServices";
   
   
   const PatientUpdate = () => {
-    
     const { id } = useParams()
-    useEffect( () => {
-        const fetchData = async () => {
-          
-          const dateInput = document.getElementById("date");
-    
-        }
-      fetchData()
-      }, [id])
-    
-
-    const [patient, setPatient] = useState(null)
-   
+    console.log("aaaa3" , id)
     const navigate = useNavigate()
+    const [patient, setPatient] = useState(null)  
+
+    useEffect( () => {
+      const fetchData = async () => {
+        const res = await getPatientByID(id)
+        setPatient(res) 
+        const dateInput = document.getElementById("date");
+         dateInput.value = toDate(res?.dateOfBirth);
+      }
+    fetchData()
+    }, [id])
+
+    const toDate = (date) =>{
+      const dateObj = new Date(date);
+      const year = dateObj.getFullYear();
+      const month = dateObj.getMonth() + 1;
+      const day = dateObj.getDate();
+      const strMonth = month <10 ? `0${month}` : `${month}`
+      const strDay = day <10 ? `0${day}` : `${day}`
+      return `${year}-${strMonth}-${strDay}`;
   
-   
+    }
   
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -44,10 +53,16 @@ import {
         email: info.get('email'),
         situationFamilliale: info.get('situationFamilliale'),
         assuranceMedicale: info.get('assuranceMedicale'),
+        rdvs:[]
         // Ajoutez d'autres champs selon vos besoins
       }
   
       console.log("data", data);
+      updatePatientByID(patient.id, data).then(()=>{
+        navigate('/patients')
+      })
+
+  
     };
   
   
@@ -79,7 +94,7 @@ import {
               </div>
               <div className="userShowInfo">
                 <CalendarToday className="userShowIcon" />
-                <span className="userShowInfoTitle">{`${(patient?.dateNaissance)}`}</span>
+                <span className="userShowInfoTitle">{`${toDate(patient?.dateNaissance)}`}</span>
               </div>
               <span className="userShowTitle">Contact</span>
               <div className="userShowInfo">
