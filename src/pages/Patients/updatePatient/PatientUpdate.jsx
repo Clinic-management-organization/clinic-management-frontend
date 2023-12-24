@@ -11,11 +11,22 @@ import {
   import React, { useEffect, useState } from 'react';
   import { Toaster, toast } from "react-hot-toast";
   
+  
   const PatientUpdate = () => {
+    
+    const { id } = useParams()
+    useEffect( () => {
+        const fetchData = async () => {
+          
+          const dateInput = document.getElementById("date");
+    
+        }
+      fetchData()
+      }, [id])
     
 
     const [patient, setPatient] = useState(null)
-    const { id } = useParams()
+   
     const navigate = useNavigate()
   
    

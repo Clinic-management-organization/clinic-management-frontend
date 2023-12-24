@@ -5,16 +5,16 @@ import PatientUpdate from "../pages/Patients/updatePatient/PatientUpdate";
 
 
 const PatientRoutes = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<PatientsList />} />
-      <Route path="/add" element={<PatientAdd/>} />
-      <Route path="/update/:id" element={<PatientUpdate />}/>
-      {/* <Route path="/studentDetails/:_id" element={<StudentDetails />} /> */}
-    
-      
-      
-    </Routes>
-  );
+    return (
+        <Routes>
+            <Route path="/" element={<PatientsList />} />
+            <Route path="/add" element={<PatientAdd />} />
+            <Route path="/update/:id" element={<PatientUpdate />} />
+            {/* <Route path="/studentDetails/:_id" element={<StudentDetails />} /> */}
+
+
+
+        </Routes>
+    );
 };
 export default PatientRoutes;
