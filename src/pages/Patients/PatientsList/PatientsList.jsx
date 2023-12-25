@@ -1,20 +1,28 @@
-import "./index.css";
 import { DeleteOutline } from "@mui/icons-material";
-import { userRows } from "../../../dummyData";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid } from "@mui/x-data-grid";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { deletePatientByID, getAllPatients } from "../../../services/PatientsServices";
+import "./index.css";
 
 const PatientsList = () => {
-const [data, setData] = useState(userRows);
-const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const navigate = useNavigate()
 
-const handleDelete = (id) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getAllPatients();
+      console.log("res", res);
+      setData(res);
+    };
+    fetchData();
+  }, []);
+
+  const handleDelete = async (id) => {
+    await deletePatientByID(id);
     setData(data.filter((item) => item.id !== id));
   };
-const columns = [
-    { field: "id", headerName: "ID", width: 90 },
+  const columns = [
     { field: "nom", headerName: "Nom", width: 100 },
     {
       field: "prenom",
@@ -27,7 +35,7 @@ const columns = [
       width: 100,
     },
     {
-      field: "date naissance",
+      field: "dateNaissance",
       headerName: "Date de naissance",
       width: 160,
     },
@@ -37,11 +45,11 @@ const columns = [
       width: 160,
     },
     {
-      field: "mail",
+      field: "email",
       headerName: "E-mail",
       width: 160,
     },
-    
+
     {
       field: "action",
       headerName: "Action",
@@ -49,7 +57,12 @@ const columns = [
       renderCell: (params) => {
         return (
           <>
-              <button className="userListEdit" onClick={()=>{navigate(`update/${params?.row?.id}`)}}>Edit</button>
+           
+              <button className="userListEdit" 
+                onClick={() => {
+                  navigate(`update/${params.row.id}`);
+                }}>Edit</button>
+          
             <DeleteOutline
               className="userListDelete"
               onClick={() => handleDelete(params.row.id)}
@@ -59,18 +72,18 @@ const columns = [
       },
     },
   ];
-   
-    return (
-        <div className="userList">
-        <DataGrid
-          rows={data}
-          disableSelectionOnClick
-          columns={columns}
-          pageSize={8}
-          checkboxSelection
-        />
-      </div>
-    );
-}
+
+  return (
+    <div className="userList">
+      <DataGrid
+        rows={data}
+        disableSelectionOnClick
+        columns={columns}
+        pageSize={8}
+        checkboxSelection
+      />
+    </div>
+  );
+};
 
 export default PatientsList;

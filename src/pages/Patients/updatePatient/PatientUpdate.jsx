@@ -1,50 +1,44 @@
 import {
-    CalendarToday,
-    MailOutline,
-    PermIdentity,
-    PhoneAndroid,
-  } from "@mui/icons-material";
-  import { useNavigate, useParams } from "react-router-dom";
+  CalendarToday,
+  MailOutline,
+  PermIdentity,
+  PhoneAndroid,
+} from "@mui/icons-material";
+import { useNavigate, useParams } from "react-router-dom";
  
   import "./index.css";
   
   import React, { useEffect, useState } from 'react';
-  import { Toaster, toast } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
+import { getPatientByID, updatePatientByID } from "../../../services/PatientsServices";
+  
   
   const PatientUpdate = () => {
-  
-  const { id } = useParams();
-  const [patient, setPatient] = useState(null);
-  const navigate = useNavigate();
+    const { id } = useParams()
+    console.log("aaaa3" , id)
+    const navigate = useNavigate()
+    const [patient, setPatient] = useState(null)  
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const patientId = parseInt(id, 10);
-
-        const data = {
-			id: 1,
-			  username: "Jon Snow",
-			  avatar:
-				"https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-			  email: "jon@gmail.com",
-			  status: "active",
-			  transaction: "$120.00",
-
-		}
-
-        // Set patient data
-        setPatient(data);
-      } catch (error) {
-        console.error("Error fetching patient data:", error);
-        // Handle error, e.g., redirect to an error page
+    useEffect( () => {
+      const fetchData = async () => {
+        const res = await getPatientByID(id)
+        setPatient(res) 
+        const dateInput = document.getElementById("date");
+         dateInput.value = toDate(res?.dateOfBirth);
       }
-    };
+    fetchData()
+    }, [id])
 
-    fetchData();
-  }, [id]);
- 
-   
+    const toDate = (date) =>{
+      const dateObj = new Date(date);
+      const year = dateObj.getFullYear();
+      const month = dateObj.getMonth() + 1;
+      const day = dateObj.getDate();
+      const strMonth = month <10 ? `0${month}` : `${month}`
+      const strDay = day <10 ? `0${day}` : `${day}`
+      return `${year}-${strMonth}-${strDay}`;
+  
+    }
   
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -59,10 +53,16 @@ import {
         email: info.get('email'),
         situationFamilliale: info.get('situationFamilliale'),
         assuranceMedicale: info.get('assuranceMedicale'),
+        rdvs:[]
         // Ajoutez d'autres champs selon vos besoins
       }
   
       console.log("data", data);
+      updatePatientByID(patient.id, data).then(()=>{
+        navigate('/patients')
+      })
+
+  
     };
   
   
@@ -94,7 +94,7 @@ import {
               </div>
               <div className="userShowInfo">
                 <CalendarToday className="userShowIcon" />
-                <span className="userShowInfoTitle">{`${(patient?.dateNaissance)}`}</span>
+                <span className="userShowInfoTitle">{`${toDate(patient?.dateNaissance)}`}</span>
               </div>
               <span className="userShowTitle">Contact</span>
               <div className="userShowInfo">

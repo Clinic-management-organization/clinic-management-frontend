@@ -1,22 +1,21 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Autocomplete from '@mui/material/Autocomplete';
+import { PersonAddAlt1 as PersonAddAlt1Icon } from "@mui/icons-material";
 import {
+  Avatar,
+  Box,
+  Button,
   Container,
   CssBaseline,
-  Box,
-  Typography,
-  Avatar,
-  TextField,
   Grid,
-  Button,
-  FormControlLabel,
-  Checkbox,
-  InputAdornment,
+  TextField,
+  Typography,
 } from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
 import { ThemeProvider } from "@mui/system";
-import { PersonAddAlt1 as PersonAddAlt1Icon } from "@mui/icons-material";
+import React, { useState } from "react";
 import { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import HoraireForm from "./HoraireForm";
+import MedecinHoraires from "./MedecinHoraires";
 
 // Ajoutez vos styles CSS personnalisés ici si nécessaire
 const theme = {};
@@ -95,77 +94,82 @@ const MedecinAdd = () => {
                   required
                 />
               </Grid>
-             
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    label="Date de naissance"
-                    name="dateNaissance"
-                    type="date"
-                    value={formData.dateNaissance}
-                    onChange={handleChange}
-                    fullWidth
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    required
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    label="Sexe"
-                    name="sexe"
-                    value={formData.sexe}
-                    onChange={handleChange}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Adresse"
-                    name="adresse"
-                    value={formData.adresse}
-                    onChange={handleChange}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    label="Téléphone"
-                    name="tel"
-                    value={formData.tel}
-                    onChange={handleChange}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    label="Email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12}>
-  <Autocomplete
-    options={['Spécialité 1', 'Spécialité 2', 'Spécialité 3', /* ... autres spécialités ... */]}
-    renderInput={(params) => (
-      <TextField
-        {...params}
-        label="Spécialité"
-        name="specialite"
-        value={formData.specialite}
-        onChange={handleChange}
-        fullWidth
-        required
-      />
-    )}
-  />
-</Grid>
-                
+
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Date de naissance"
+                  name="dateNaissance"
+                  type="date"
+                  value={formData.dateNaissance}
+                  onChange={handleChange}
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  required
+                />
               </Grid>
-            
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Sexe"
+                  name="sexe"
+                  value={formData.sexe}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Adresse"
+                  name="adresse"
+                  value={formData.adresse}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Téléphone"
+                  name="tel"
+                  value={formData.tel}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Autocomplete
+                  options={[
+                    "Spécialité 1",
+                    "Spécialité 2",
+                    "Spécialité 3" /* ... autres spécialités ... */,
+                  ]}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Spécialité"
+                      name="specialite"
+                      value={formData.specialite}
+                      onChange={handleChange}
+                      fullWidth
+                      required
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <MedecinHoraires/>
+              </Grid>
+            </Grid>
 
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
