@@ -135,15 +135,9 @@ const Navbar = ({ socket }) => {
         <MenuItem>Profil</MenuItem>
         <MenuItem onClick={handleOpen}>Mon Compte</MenuItem>
 
-        {user.role === 5 && (
-          <MenuItem
-            onClick={() => {
-              navigate(`/person/${user?._id}`);
-            }}
-          >
-            Mon CV
-          </MenuItem>
-        )}
+       
+         
+       
         <MenuItem
           onClick={() => {
             localStorage.clear();
