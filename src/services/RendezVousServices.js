@@ -36,7 +36,9 @@ export const addRendezVous = async (rendezVous) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.post(url, { ...rendezVous });
+        const response = await axios.post(url, rendezVous ,{headers: {
+            'Content-Type': 'application/json',
+          },});
         return response.data;
     } catch (error) {
         console.error("Error adding rendez-vous:", error);

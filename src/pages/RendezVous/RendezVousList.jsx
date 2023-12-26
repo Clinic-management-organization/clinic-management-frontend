@@ -9,7 +9,7 @@ import {
     Container
 } from '@mui/material';
 import Appointment from './Appointment';
-
+import Schedule from './Schedule';
 const RendezVousList = () => {
     // State pour stocker les données de spécialités, médecins et disponibilité
     const [specialites, setSpecialites] = useState(["specialite1", "specialite2"]);
@@ -45,12 +45,12 @@ const RendezVousList = () => {
     }, []);
 
     return (
-        
+
         <div style={{ marginLeft: '5%' ,marginTop: '3%' }}>
              <Typography component="h1" variant="h5" style={{ marginBottom: '3%' }}>
             Planification des Rendez-Vous
           </Typography>
-
+          <Schedule />
      <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
 
      <div style={{ marginRight: '30px'}}>
@@ -109,13 +109,8 @@ const RendezVousList = () => {
      <Appointment/>
         </div>
         </div>
-<<<<<<< HEAD
         </div>
 
-=======
-        </div>  
-      
->>>>>>> ba59981d4e51d7293177347f238ca95b4ee0b21d
     );
 };
 
