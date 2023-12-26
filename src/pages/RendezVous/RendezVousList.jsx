@@ -3,14 +3,6 @@ import {
     FormControl,
     InputLabel,
     Select,
-    TableContainer,
-    Paper,
-    Table,
-    Box,
-    TableHead,
-    TableRow,
-    TableCell,
-    TableBody,
     Typography,
     Grid,
     TextField,
@@ -26,9 +18,6 @@ const RendezVousList = () => {
     const joursSemaine = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
     const heuresTravail = Array.from({ length: 10 }, (_, i) => `${i + 8}:00`);
 
-const isHeureDisponible=async ()=>{
-
-}
     // Effet pour charger les données initiales
     useEffect(() => {
         // Code pour récupérer les données initiales depuis le backend
@@ -59,9 +48,9 @@ const isHeureDisponible=async ()=>{
              <Typography component="h1" variant="h5" style={{ marginBottom: '3%' }}>
             Planification des Rendez-Vous
           </Typography>
-       
+
      <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
-        
+
      <div style={{ marginRight: '30px'}}>
          <FormControl fullWidth margin="normal" style={{ marginRight: '16px', width: '100%' ,marginBottom:'8%'}}>
         <InputLabel htmlFor="specialite">Spécialité :</InputLabel>
@@ -103,8 +92,8 @@ const isHeureDisponible=async ()=>{
                     label="semaine rendez_vous"
                     name="dateNaissance"
                     type="date"
-                 
-                   
+
+
                     fullWidth
                     InputLabelProps={{
                       shrink: true,
@@ -114,12 +103,12 @@ const isHeureDisponible=async ()=>{
                     </Grid>
         </div>
         <div>
-            
+
      <Appointment/>
         </div>
         </div>
-        </div>    
-      
+        </div>
+
     );
 };
 
