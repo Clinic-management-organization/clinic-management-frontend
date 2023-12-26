@@ -10,6 +10,7 @@ import PatientsList from './pages/Patients/PatientsList/PatientsList';
 import PatientAdd from './pages/Patients/addPatient/PatientAdd';
 import PatientUpdate from './pages/Patients/updatePatient/PatientUpdate';
 import Schedule from './pages/RendezVous/Schedule';
+import RendezVousList from './pages/RendezVous/RendezVousList';
 import UpdateStatusRendezVous from './pages/RendezVous/UpdateStatusRendezVous';
 import DossierMedicalList from './pages/DossierMedical/DossierMedicalList';
 
@@ -28,7 +29,7 @@ function App() {
             <Route path="/medecins" element={<MedecinsList />} />
             <Route path="/medecins/add" element={<MedecinAdd />} />
             <Route path="/medecins/update/:id" element={<MedecinUpdate/>} />
-            <Route path="/rendez_vous" element={<Schedule/>} />
+            <Route path="/rendez_vous" element={<RendezVousList/>} />
             <Route path="/dossiersMedicaux" element={<DossierMedicalList/>} />
 
 

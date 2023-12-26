@@ -3,8 +3,7 @@
 import React, { useState } from 'react';
 import HoraireForm from './HoraireForm'; // Assurez-vous d'importer correctement le composant
 
-const MedecinHoraires = () => {
-  const [horaires, setHoraires] = useState([]);
+const MedecinHoraires = ({horaires, setHoraires}) => {
 
   const addHoraire = (horaire) => {
     // Vous pouvez effectuer ici une validation supplémentaire si nécessaire
@@ -19,7 +18,7 @@ const MedecinHoraires = () => {
       <div>
         <h3>Horaires Ajoutés :</h3>
         <ul>
-          {horaires.map((horaire, index) => (
+          {horaires?.map((horaire, index) => (
             <li key={index}>
               Jour: {horaire.dayOfWeek}, Début: {horaire.startTime}, Fin: {horaire.endTime}
             </li>

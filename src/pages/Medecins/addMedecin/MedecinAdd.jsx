@@ -8,6 +8,8 @@ import {
   Grid,
   TextField,
   Typography,
+  FormControl,
+  Select
 } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import { ThemeProvider } from "@mui/system";
@@ -17,11 +19,13 @@ import { useNavigate } from "react-router-dom";
 import HoraireForm from "./HoraireForm";
 import MedecinHoraires from "./MedecinHoraires";
 
+import { addMedecin } from "../../../services/MedecinServices";
 // Ajoutez vos styles CSS personnalisés ici si nécessaire
 const theme = {};
 
 const MedecinAdd = () => {
   const navigate = useNavigate();
+  const [horaires, setHoraires] = useState([]);
   const [formData, setFormData] = useState({
     nom: "",
     prenom: "",
@@ -31,7 +35,9 @@ const MedecinAdd = () => {
     tel: "",
     email: "",
     specialite: "",
+    horaires: [] ,
   });
+  const specialites = [ 'DERMATOLOGIE', , 'GYNECOLOGIE', 'OPHTALMOLOGIE'];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,8 +49,15 @@ const MedecinAdd = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Ajoutez votre logique de gestion des données ici
-    // Utilisez formData pour obtenir les valeurs des champs
+    const info = new FormData(e.currentTarget);
+    const _formData = {...formData, horaires}
+
+    console.log("data", _formData);
+    addMedecin( _formData).then(()=>{
+      navigate('/medecins')
+    })
+
+
   };
 
   return (
@@ -78,6 +91,7 @@ const MedecinAdd = () => {
               {/* Ajoutez les champs de formulaire avec les noms correspondants */}
               <Grid item xs={12} sm={6}>
                 <TextField
+                  fullWidth
                   label="Nom"
                   name="nom"
                   value={formData.nom}
@@ -87,6 +101,7 @@ const MedecinAdd = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  fullWidth
                   label="Prénom"
                   name="prenom"
                   value={formData.prenom}
@@ -94,7 +109,6 @@ const MedecinAdd = () => {
                   required
                 />
               </Grid>
-
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="Date de naissance"
@@ -147,27 +161,24 @@ const MedecinAdd = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <Autocomplete
-                  options={[
-                    "Spécialité 1",
-                    "Spécialité 2",
-                    "Spécialité 3" /* ... autres spécialités ... */,
-                  ]}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Spécialité"
-                      name="specialite"
-                      value={formData.specialite}
-                      onChange={handleChange}
-                      fullWidth
-                      required
-                    />
-                  )}
-                />
+                <FormControl >
+                  <Select native label="Spécialité"
+                  name="specialite"
+                  value={formData.specialite}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                  >
+                  {specialites?.map((specialite, index) => (
+                      <option key={index} value={specialite}>
+                      {specialite}
+                      </option>
+                  ))}
+                  </Select>
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <MedecinHoraires/>
+                <MedecinHoraires horaires={horaires} setHoraires={setHoraires}/>
               </Grid>
             </Grid>
 

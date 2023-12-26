@@ -10,105 +10,107 @@ import {
 } from '@mui/material';
 import Appointment from './Appointment';
 import Schedule from './Schedule';
+import {getAllRendezVous, addRendezVous, getRendezVousByMedecinID} from '../../services/RendezVousServices'
+import {getAllMedecins} from '../../services/MedecinServices'
+
 const RendezVousList = () => {
     // State pour stocker les données de spécialités, médecins et disponibilité
-    const [specialites, setSpecialites] = useState(["specialite1", "specialite2"]);
+    const specialites = [ 'DERMATOLOGIE', , 'GYNECOLOGIE', 'OPHTALMOLOGIE'];
     const [medecins, setMedecins] = useState([]);
-    const [calendrier, setCalendrier] = useState([]);
-    const [heuresDisponibles,setHeuresDisponibles] =useState([]);
-    const joursSemaine = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-    const heuresTravail = Array.from({ length: 10 }, (_, i) => `${i + 8}:00`);
+    const [selectedSpecialite, setSelectedSpecialite] = useState('');
+    const [selectedMedecin, setSelectedMedecin] = useState(null);
 
-    // Effet pour charger les données initiales
+    const [rdvs, setRdvs] = useState([])
+
+    const formattedRdvsToData = (res) => {
+             // Reformater les données avant de les stocker dans le state
+             const formattedRdvs = res.map((rdv) => ({
+               Id: rdv.id,
+               Subject: rdv.motif || 'Indosponible', // Remplacez 'Default Subject' par une valeur par défaut si motif est null
+               StartTime: new Date(rdv.dateRendezVous),
+               EndTime: new Date(new Date(rdv.dateRendezVous).getTime() + 60 * 60 * 1000),
+             }));
+             return formattedRdvs
+    }
+
+    useEffect(() => {
+      const fetchData = async () => {
+          try {
+           // Appel à votre API pour récupérer les rendez-vous
+           if (selectedMedecin) {
+              const res = await getRendezVousByMedecinID(selectedMedecin.id);
+              // Mettre à jour le state avec les données formatées
+              setRdvs(formattedRdvsToData(res));
+              console.log("hani lenaaa", selectedMedecin)
+            }
+         } catch (error) {
+           console.error('Erreur lors de la récupération des rendez-vous', error);
+         }
+        };
+        fetchData();
+      }, [selectedMedecin]);
+
     useEffect(() => {
         // Code pour récupérer les données initiales depuis le backend
-        // Remplacez ces appels factices par des appels réels à votre API
-        const fetchSpecialites = async () => {
-            // Code pour récupérer les spécialités
-            setSpecialites(['Cardiologue', 'Dermatologue', 'Généraliste']);
-        };
-
         const fetchMedecins = async () => {
-            // Code pour récupérer les médecins
-            setMedecins(['Médecin 1', 'Médecin 2', 'Médecin 3']);
+          const res = await getAllMedecins();
+          // If a specialty is selected, filter the doctors based on the specialty
+           const filteredMedecins = selectedSpecialite
+             ? res.filter(medecin => medecin.specialite === selectedSpecialite)
+             : res;
+           setMedecins(filteredMedecins);
         };
-
-        const fetchCalendrier = async () => {
-            // Code pour récupérer la disponibilité
-            // Cette partie dépend de la logique de votre backend
-            setCalendrier(/* données du calendrier */);
-        };
-
-        fetchSpecialites();
         fetchMedecins();
-        fetchCalendrier();
-    }, []);
+    }, [selectedSpecialite]);
+
+    const handleSpecialiteChange = (event) => {
+      setSelectedSpecialite(event.target.value);
+      setSelectedMedecin(null); // Reset the selected doctor when changing the specialty
+    };
+
+    const handleMedecinChange = async (event) => {
+      const selectedMedecinId = event.target.value;
+      const medecin = medecins.find(medecin => medecin.id == selectedMedecinId);
+      console.log("le9it medecin", medecin)
+      setSelectedMedecin(medecin);
+    };
 
     return (
 
-        <div style={{ marginLeft: '5%' ,marginTop: '3%' }}>
+        <div style={{ marginLeft: '10%' ,marginTop: '3%' }}>
              <Typography component="h1" variant="h5" style={{ marginBottom: '3%' }}>
             Planification des Rendez-Vous
           </Typography>
-          <Schedule />
-     <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+          <div style={{display: "flex", gap:"10%", marginBottom: "25px"}}>
+              <FormControl >
+              <Select native label="Spécialité"
+              onChange={handleSpecialiteChange}
+               value={selectedSpecialite}
+              >
+              <option value="">Toutes les spécialités</option>
+              {specialites?.map((specialite, index) => (
+                  <option key={index} value={specialite}>
+                  {specialite}
+                  </option>
+              ))}
+              </Select>
+              </FormControl>
 
-     <div style={{ marginRight: '30px'}}>
-         <FormControl fullWidth margin="normal" style={{ marginRight: '16px', width: '100%' ,marginBottom:'8%'}}>
-        <InputLabel htmlFor="specialite">Spécialité :</InputLabel>
-        <Select
-        native
-        label="Spécialité"
-        inputProps={{
-            name: 'specialite',
-            id: 'specialite',
-        }}
-        >
-        {specialites?.map((specialite, index) => (
-            <option key={index} value={specialite}>
-            {specialite}
-            </option>
-        ))}
-        </Select>
-            </FormControl>
-
-    <FormControl fullWidth margin="normal" style={{ marginRight: '16px', width: '100%' ,marginBottom:'10%'}}>
-        <InputLabel htmlFor="medecin">Médecin :</InputLabel>
-        <Select
-        native
-        label="Médecin"
-        inputProps={{
-            name: 'medecin',
-            id: 'medecin',
-        }}
-        >
-        {medecins?.map((medecin, index) => (
-            <option key={index} value={medecin}>
-            {medecin}
-            </option>
-        ))}
-        </Select>
-    </FormControl>
-                <Grid item xs={12} sm={6} style={{ marginRight: '16px', width: '100%' ,marginBottom:'8%'}}>
-                  <TextField
-                    label="semaine rendez_vous"
-                    name="dateNaissance"
-                    type="date"
-
-
-                    fullWidth
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    required
-                  />
-                    </Grid>
-        </div>
-        <div>
-
-     <Appointment/>
-        </div>
-        </div>
+              <FormControl >
+                  <Select native label="Médecin"
+                  onChange={handleMedecinChange}
+                  value={selectedMedecin ? selectedMedecin.id : ''}
+                  >
+                  <option value="">Tous les médecins</option>
+                  {medecins?.map((medecin, index) => (
+                      <option key={index} value={medecin.id}>
+                      {`${medecin.nom} ${medecin.prenom}` }
+                      </option>
+                  ))}
+                  </Select>
+              </FormControl>
+          </div>
+            <Schedule rdvs={rdvs} setRdvs={setRdvs} />
         </div>
 
     );

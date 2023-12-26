@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject } from '@syncfusion/ej2-react-schedule';
 import {getAllRendezVous, addRendezVous} from '../../services/RendezVousServices'
 
-const Schedule = () => {
-  const [rdvs, setRdvs] = useState([])
+const Schedule = ({rdvs, setRdvs}) => {
 
     const formattedRdvsToData = (res) => {
              // Reformater les données avant de les stocker dans le state
@@ -26,20 +25,6 @@ const Schedule = () => {
              }));
              return formattedRdvs
     }
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-       // Appel à votre API pour récupérer les rendez-vous
-       const res = await getAllRendezVous();
-
-       // Mettre à jour le state avec les données formatées
-       setRdvs(formattedRdvsToData(res));
-     } catch (error) {
-       console.error('Erreur lors de la récupération des rendez-vous', error);
-     }
-    };
-    fetchData();
-  }, []);
 
   const handleActionComplete = async (args) => {
      if (args.requestType === 'eventCreated' || args.requestType === 'eventChanged') {
@@ -58,7 +43,7 @@ const Schedule = () => {
 
   return(
     <div>
-      <ScheduleComponent height='550px' selectedDate={new Date()} eventSettings={eventSettings} actionComplete={handleActionComplete}>
+      <ScheduleComponent height='550px' width="90%" selectedDate={new Date()} eventSettings={eventSettings} actionComplete={handleActionComplete}>
         <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
       </ScheduleComponent>
     </div>
