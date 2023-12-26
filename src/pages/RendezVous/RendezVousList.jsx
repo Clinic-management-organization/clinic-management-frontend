@@ -6,6 +6,7 @@ import {
     Typography,
     Grid,
     TextField,
+    Container
 } from '@mui/material';
 import Appointment from './Appointment';
 
@@ -44,6 +45,7 @@ const RendezVousList = () => {
     }, []);
 
     return (
+        
         <div style={{ marginLeft: '5%' ,marginTop: '3%' }}>
              <Typography component="h1" variant="h5" style={{ marginBottom: '3%' }}>
             Planification des Rendez-Vous
@@ -107,8 +109,13 @@ const RendezVousList = () => {
      <Appointment/>
         </div>
         </div>
+<<<<<<< HEAD
         </div>
 
+=======
+        </div>  
+      
+>>>>>>> ba59981d4e51d7293177347f238ca95b4ee0b21d
     );
 };
 

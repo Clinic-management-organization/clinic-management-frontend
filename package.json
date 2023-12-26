@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
     "@devexpress/dx-react-core": "^4.0.6",
+=======
+>>>>>>> ba59981d4e51d7293177347f238ca95b4ee0b21d
     "@devexpress/dx-react-scheduler": "^4.0.6",
     "@devexpress/dx-react-scheduler-material-ui": "^4.0.6",
     "@emotion/react": "^11.11.3",
@@ -17,6 +20,8 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.2",
+    "i": "^0.3.7",
+    "npm": "^10.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",

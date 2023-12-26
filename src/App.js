@@ -8,7 +8,15 @@ import MedecinUpdate from './pages/Medecins/updateMedecin/MedecinUpdate';
 import PatientsList from './pages/Patients/PatientsList/PatientsList';
 import PatientAdd from './pages/Patients/addPatient/PatientAdd';
 import PatientUpdate from './pages/Patients/updatePatient/PatientUpdate';
+<<<<<<< HEAD
 import RendezVousList from './pages/RendezVous/RendezVousList'
+=======
+import MedecinUpdate from './pages/Medecins/updateMedecin/MedecinUpdate';
+import RendezVousList from './pages/RendezVous/RendezVousList';
+import UpdateStatusRendezVous from './pages/RendezVous/UpdateStatusRendezVous';
+import DossierMedicalList from './pages/DossierMedical/DossierMedicalList';
+
+>>>>>>> ba59981d4e51d7293177347f238ca95b4ee0b21d
 function App() {
 
   return (
@@ -25,6 +33,7 @@ function App() {
             <Route path="/medecins/add" element={<MedecinAdd />} />
             <Route path="/medecins/update/:id" element={<MedecinUpdate/>} />
             <Route path="/rendez_vous" element={<RendezVousList/>} />
+            <Route path="/dossiersMedicaux" element={<DossierMedicalList/>} />
 
 
         </Routes>

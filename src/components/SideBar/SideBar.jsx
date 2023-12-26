@@ -65,10 +65,10 @@ const SideBar = () => {
               </Link>
             
           
-              <Link to="/alumni" className="link">
+              <Link to="/dossiersMedicaux" className="link">
                 <li className="sidebarListItem">
                   <Person4 className="sidebarIcon" />
-                  Alumni
+                  Dossiers Medicaux
                 </li>
               </Link>
             
