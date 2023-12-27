@@ -16,6 +16,7 @@ import {
 import { ThemeProvider } from "@mui/system";
 import { PersonAddAlt1 as PersonAddAlt1Icon } from "@mui/icons-material";
 import { Toaster } from "react-hot-toast";
+import {addPatient} from '../../../services/PatientsServices'
 
 // Ajoutez vos styles CSS personnalisés ici si nécessaire
 const theme = {};
@@ -44,8 +45,12 @@ const PatientAdd = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Ajoutez votre logique de gestion des données ici
-    // Utilisez formData pour obtenir les valeurs des champs
+    const info = new FormData(e.currentTarget);
+    console.log("data", formData);
+    addPatient( formData).then(()=>{
+      navigate('/patients')
+    })
+
   };
 
   return (
@@ -95,7 +100,7 @@ const PatientAdd = () => {
                   required
                 />
               </Grid>
-             
+
                 <Grid item xs={12} sm={6}>
                   <TextField
                     label="Date de naissance"
@@ -166,7 +171,7 @@ const PatientAdd = () => {
                   />
                 </Grid>
               </Grid>
-            
+
 
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>

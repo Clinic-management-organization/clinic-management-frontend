@@ -5,26 +5,25 @@ import {
   PhoneAndroid,
 } from "@mui/icons-material";
 import { useNavigate, useParams } from "react-router-dom";
- 
+
   import "./index.css";
-  
+
   import React, { useEffect, useState } from 'react';
 import { Toaster } from "react-hot-toast";
 import { getPatientByID, updatePatientByID } from "../../../services/PatientsServices";
-  
-  
+
+
   const PatientUpdate = () => {
     const { id } = useParams()
-    console.log("aaaa3" , id)
     const navigate = useNavigate()
-    const [patient, setPatient] = useState(null)  
+    const [patient, setPatient] = useState(null)
 
     useEffect( () => {
       const fetchData = async () => {
         const res = await getPatientByID(id)
-        setPatient(res) 
+        setPatient(res)
         const dateInput = document.getElementById("date");
-         dateInput.value = toDate(res?.dateOfBirth);
+         dateInput.value = toDate(res?.dateNaissance);
       }
     fetchData()
     }, [id])
@@ -37,9 +36,9 @@ import { getPatientByID, updatePatientByID } from "../../../services/PatientsSer
       const strMonth = month <10 ? `0${month}` : `${month}`
       const strDay = day <10 ? `0${day}` : `${day}`
       return `${year}-${strMonth}-${strDay}`;
-  
+
     }
-  
+
     const handleSubmit = async (e) => {
       e.preventDefault();
       const info = new FormData(e.currentTarget);
@@ -56,16 +55,16 @@ import { getPatientByID, updatePatientByID } from "../../../services/PatientsSer
         rdvs:[]
         // Ajoutez d'autres champs selon vos besoins
       }
-  
+
       console.log("data", data);
       updatePatientByID(patient.id, data).then(()=>{
         navigate('/patients')
       })
 
-  
+
     };
-  
-  
+
+
     return (
       <div className="user">
         <div className="userTitleContainer">
@@ -160,6 +159,15 @@ import { getPatientByID, updatePatientByID } from "../../../services/PatientsSer
                   />
                 </div>
                 <div className="userUpdateItem">
+                  <label>Email</label>
+                  <input
+                    type="text"
+                    name="email"
+                    defaultValue={patient?.email}
+                    className="userUpdateInput"
+                  />
+                </div>
+                <div className="userUpdateItem">
                   <label>Téléphone</label>
                   <input
                     type="text"
@@ -177,5 +185,5 @@ import { getPatientByID, updatePatientByID } from "../../../services/PatientsSer
       </div>
     );
   }
-  
+
   export default PatientUpdate;

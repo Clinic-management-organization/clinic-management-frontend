@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Close, DeleteOutline, Done } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { Typography } from "@mui/material";
+import { Typography, IconButton } from "@mui/material";
 import { getRendezVousByMedecinID, updateRendezVousByID, updateStatusRendezVousByID } from "../../services/RendezVousServices";
 
 const UpdateStatusRendezVous = () => {
@@ -19,9 +19,6 @@ const UpdateStatusRendezVous = () => {
     fetchData();
   }, []);
 
-  const handleDelete = async (id) => {
-    // Mettez à jour cette fonction pour supprimer un rendez-vous
-  };
 
   const toDate = (date) =>{
     const dateObj = new Date(date);
@@ -34,34 +31,50 @@ const UpdateStatusRendezVous = () => {
 
   }
   const handleEdit = async (id , rdv , status) => {
-   
+
     const res = await updateStatusRendezVousByID(id, status)
   };
 
   const columns = [
-    { field: "dateRendezVous", headerName: "Date du rendez-vous", width: 200 },
+    { field: "dateRendezVous",
+      headerName: "Date du rendez-vous",
+      width: 200,
+      valueFormatter: (params) => {
+        // Assuming 'dateNaissance' is a valid Date object
+        const date = new Date(params.value);
+        const formattedDate = date.toLocaleDateString("fr-FR"); // Adjust the locale as needed
+        return formattedDate;
+      },
+     },
     { field: "remarques", headerName: "Remarques", width: 250 },
-    { field: "motif", headerName: "Motif", width: 150 },
-    { field: "etatRendezVous", headerName: "État du rendez-vous", width: 170 },
+    { field: "motif", headerName: "Motif", width: 100 },
+    { field: "etatRendezVous", headerName: "État du rendez-vous", width: 150 },
     {
       field: "action",
       headerName: "Action",
       width: 150,
       renderCell: (params) => (
         <>
-        <Done
-            className="rendezVousListEdit"
-            onClick={() => {
-                handleEdit(params.row.id , params.row , "CONFIRMEE");
+        <IconButton
+          onClick={() => {
+              handleEdit(params.row.id , params.row , "CONFIRMEE").then(()=>{
+                window.location.reload();
+
+              })
+          }}
+          >
+        <Done/>
+        </IconButton>
+        <IconButton
+          onClick={() => {
+              handleEdit(params.row.id , params.row ,"ANNULEE").then(()=>{
+                window.location.reload();
+
+              })
             }}
-        />
-          
-          <Close
-            className="rendezVousListDelete"
-            onClick={() => {
-                handleEdit(params.row.id , params.row ,"ANNULEE");
-            }}
-          />
+            >
+            <Close/>
+          </IconButton>
         </>
       ),
     },

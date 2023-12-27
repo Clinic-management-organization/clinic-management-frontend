@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deletePatientByID, getAllPatients } from "../../../services/PatientsServices";
 import "./index.css";
-
+import {Button} from "@mui/material";
 const PatientsList = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate()
@@ -12,7 +12,6 @@ const PatientsList = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await getAllPatients();
-      console.log("res", res);
       setData(res);
     };
     fetchData();
@@ -38,6 +37,12 @@ const PatientsList = () => {
       field: "dateNaissance",
       headerName: "Date de naissance",
       width: 160,
+      valueFormatter: (params) => {
+        // Assuming 'dateNaissance' is a valid Date object
+        const date = new Date(params.value);
+        const formattedDate = date.toLocaleDateString("fr-FR"); // Adjust the locale as needed
+        return formattedDate;
+      },
     },
     {
       field: "tel",
@@ -57,12 +62,12 @@ const PatientsList = () => {
       renderCell: (params) => {
         return (
           <>
-           
-              <button className="userListEdit" 
+
+              <button className="userListEdit"
                 onClick={() => {
                   navigate(`update/${params.row.id}`);
                 }}>Edit</button>
-          
+
             <DeleteOutline
               className="userListDelete"
               onClick={() => handleDelete(params.row.id)}
@@ -74,15 +79,26 @@ const PatientsList = () => {
   ];
 
   return (
-    <div className="userList">
-      <DataGrid
-        rows={data}
-        disableSelectionOnClick
-        columns={columns}
-        pageSize={8}
-        checkboxSelection
-      />
-    </div>
+      <div className="main">
+       <div className="head">
+         <Button
+           id="add"
+           variant="outlined"
+           onClick={() => {
+             navigate(`add`);
+           }}
+         >
+           Ajouter
+         </Button>
+        </div>
+        <DataGrid
+          rows={data}
+          disableSelectionOnClick
+          columns={columns}
+          pageSize={8}
+          checkboxSelection
+        />
+      </div>
   );
 };
 

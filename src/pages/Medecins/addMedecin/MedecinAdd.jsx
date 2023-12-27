@@ -56,8 +56,6 @@ const MedecinAdd = () => {
     addMedecin( _formData).then(()=>{
       navigate('/medecins')
     })
-
-
   };
 
   return (

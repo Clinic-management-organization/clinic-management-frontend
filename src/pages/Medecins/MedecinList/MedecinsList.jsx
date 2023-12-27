@@ -4,6 +4,7 @@ import { userRows } from "../../../dummyData";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { DataGrid } from '@mui/x-data-grid';
+import {Button} from "@mui/material";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteMedecinByID, getAllMedecins } from "../../../services/MedecinServices";
@@ -25,7 +26,7 @@ const handleDelete = async (id) =>  {
     setData(data.filter((item) => item.id !== id));
   };
 const columns = [
-  
+
     { field: "nom", headerName: "Nom", width: 100 },
     {
       field: "prenom",
@@ -38,9 +39,15 @@ const columns = [
       width: 100,
     },
     {
-      field: "date naissance",
+      field: "dateNaissance",
       headerName: "Date de naissance",
       width: 160,
+      valueFormatter: (params) => {
+        // Assuming 'dateNaissance' is a valid Date object
+        const date = new Date(params.value);
+        const formattedDate = date.toLocaleDateString("fr-FR"); // Adjust the locale as needed
+        return formattedDate;
+      },
     },
     {
       field: "tel",
@@ -48,7 +55,7 @@ const columns = [
       width: 160,
     },
     {
-      field: "mail",
+      field: "email",
       headerName: "E-mail",
       width: 160,
     },
@@ -57,7 +64,7 @@ const columns = [
         headerName: "Spécialité",
         width: 160,
       },
-    
+
     {
       field: "action",
       headerName: "Action",
@@ -65,7 +72,7 @@ const columns = [
       renderCell: (params) => {
         return (
           <>
-           <button className="userListEdit" 
+           <button className="userListEdit"
                 onClick={() => {
                   navigate(`update/${params.row.id}`);
                 }}>Edit</button>
@@ -78,9 +85,20 @@ const columns = [
       },
     },
   ];
-   
+
     return (
-        <div className="userList">
+      <div className="main">
+       <div className="head">
+         <Button
+           id="add"
+           variant="outlined"
+           onClick={() => {
+             navigate(`add`);
+           }}
+         >
+           Ajouter
+         </Button>
+        </div>
         <DataGrid
           rows={data}
           disableSelectionOnClick

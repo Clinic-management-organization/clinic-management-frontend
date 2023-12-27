@@ -1,0 +1,11 @@
+.head{
+padding: 5%;
+}
+
+#add{
+    position: absolute;
+    right: 7%;
+    border-color: hsl(18, 100%, 66%);
+    color:hsl(18, 100%, 66%);
+
+}

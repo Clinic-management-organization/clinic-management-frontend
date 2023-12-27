@@ -27,25 +27,25 @@ import {
   Checkbox,
   InputAdornment,
 } from "@mui/material";
-  
+
   const MedecinUpdate = () => {
     const { id } = useParams()
     const navigate = useNavigate()
-    const [medecin, setMedecin] = useState(null)  
+    const [medecin, setMedecin] = useState(null)
     const [selectedSpecialite, setSelectedSpecialite] = useState('');
 
     useEffect( () => {
       const fetchData = async () => {
         const res = await getMedecinByID(id)
-        setMedecin(res) 
+        setMedecin(res)
         setSelectedSpecialite(res?.specialite)
         const dateInput = document.getElementById("date");
-         dateInput.value = toDate(res?.dateOfBirth);
+         dateInput.value = toDate(res?.dateNaissance);
       }
     fetchData()
     }, [id])
 
-  
+
     const handleOnChange = (event) => {
       console.log("specialite ",event.target.value)
       setSelectedSpecialite(event.target.value);
@@ -59,9 +59,9 @@ import {
       const strMonth = month <10 ? `0${month}` : `${month}`
       const strDay = day <10 ? `0${day}` : `${day}`
       return `${year}-${strMonth}-${strDay}`;
-  
+
     }
-  
+
     const handleSubmit = async (e) => {
       e.preventDefault();
       const info = new FormData(e.currentTarget);
@@ -88,16 +88,16 @@ import {
           updateMedecinByID(medecin.id, data).then(()=>{
             navigate('/medecins')
           })
-    
-         
+
+
       } catch (e) {
           console.log("error", e);
       }
       console.log("data", data);
   }
 };
-  
-  
+
+
     return (
       <div className="user">
         <div className="userTitleContainer">
@@ -170,6 +170,16 @@ import {
                     className="userUpdateInput"
                   />
                 </div>
+                <div className="userUpdateItem">
+                  <label>Email</label>
+                  <input
+                    type="text"
+                    name="email"
+                    defaultValue={medecin?.email}
+                    className="userUpdateInput"
+                  />
+                </div>
+
                 {/* Ajoutez d'autres champs selon vos besoins */}
               </div>
               <div className="userUpdateRight">
@@ -200,15 +210,11 @@ import {
                     className="userUpdateInput"
                   />
                 </div>
-           
-               <Box sx={{ minWidth: 120 }}>
+               <Box sx={{ minWidth: 120 }} className="userUpdateItem">
+                <label>Specialité</label>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Specialité</InputLabel>
                   <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
                     value={selectedSpecialite}
-                    label="Specialité"
                     onChange={handleOnChange}
                   >
                     <MenuItem value={"DERMATOLOGIE"}>DERMATOLOGIE</MenuItem>
@@ -216,9 +222,9 @@ import {
                     <MenuItem value={"OPHTALMOLOGIE"}>OPHTALMOLOGIE</MenuItem>
                   </Select>
                 </FormControl>
-              </Box>          
+              </Box>
                 {/* Ajoutez d'autres champs selon vos besoins */}
-                <button type="submit" className="userUpdateButton">Modifier</button>
+                <button style={{marginTop : 15}} type="submit" className="userUpdateButton">Modifier</button>
               </div>
             </form>
           </div>
@@ -226,5 +232,5 @@ import {
       </div>
     );
   }
-  
+
   export default MedecinUpdate;
