@@ -13,6 +13,7 @@ import RendezVousList from './pages/RendezVous/RendezVousList';
 import UpdateStatusRendezVous from './pages/RendezVous/UpdateStatusRendezVous';
 import DossierMedicalList from './pages/DossierMedical/DossierMedicalList';
 import ConsultationAdd from './pages/Consultation/ConsultationAdd';
+import DossierMedicalAdd from './pages/DossierMedical/DossierMedicalAdd';
 
 function App() {
 
@@ -31,7 +32,7 @@ function App() {
             <Route path="/medecins/update/:id" element={<MedecinUpdate/>} />
             <Route path="/rendez_vous" element={<RendezVousList/>} />
             <Route path="/rendez_vous_list" element={<UpdateStatusRendezVous/>} />
-            <Route path="/dossiersMedicaux" element={<DossierMedicalList/>} />
+            <Route path="/dossiersMedicaux" element={<DossierMedicalAdd/>} />
             <Route path="/consultations/add/:id" element={<ConsultationAdd/>} />
 
 
