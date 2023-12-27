@@ -67,3 +67,4 @@ export const getDossierMedicalByID = async (dossierMedicalID) => {
         return { success: false, message: error.message };
     }
 };
+

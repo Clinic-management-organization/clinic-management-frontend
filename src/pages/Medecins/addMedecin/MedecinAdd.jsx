@@ -9,14 +9,12 @@ import {
   TextField,
   Typography,
   FormControl,
-  Select
+  Select,
 } from "@mui/material";
-import Autocomplete from "@mui/material/Autocomplete";
 import { ThemeProvider } from "@mui/system";
 import React, { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import HoraireForm from "./HoraireForm";
 import MedecinHoraires from "./MedecinHoraires";
 
 import { addMedecin } from "../../../services/MedecinServices";
@@ -35,9 +33,9 @@ const MedecinAdd = () => {
     tel: "",
     email: "",
     specialite: "",
-    horaires: [] ,
+    horaires: [],
   });
-  const specialites = [ 'DERMATOLOGIE', , 'GYNECOLOGIE', 'OPHTALMOLOGIE'];
+  const specialites = ["DERMATOLOGIE", , "GYNECOLOGIE", "OPHTALMOLOGIE"];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,12 +48,12 @@ const MedecinAdd = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const info = new FormData(e.currentTarget);
-    const _formData = {...formData, horaires}
+    const _formData = { ...formData, horaires };
 
     console.log("data", _formData);
-    addMedecin( _formData).then(()=>{
-      navigate('/medecins')
-    })
+    addMedecin(_formData).then(() => {
+      navigate("/medecins");
+    });
   };
 
   return (
@@ -159,24 +157,29 @@ const MedecinAdd = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControl >
-                  <Select native label="Spécialité"
-                  name="specialite"
-                  value={formData.specialite}
-                  onChange={handleChange}
-                  fullWidth
-                  required
+                <FormControl>
+                  <Select
+                    native
+                    label="Spécialité"
+                    name="specialite"
+                    value={formData.specialite}
+                    onChange={handleChange}
+                    fullWidth
+                    required
                   >
-                  {specialites?.map((specialite, index) => (
+                    {specialites?.map((specialite, index) => (
                       <option key={index} value={specialite}>
-                      {specialite}
+                        {specialite}
                       </option>
-                  ))}
+                    ))}
                   </Select>
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <MedecinHoraires horaires={horaires} setHoraires={setHoraires}/>
+                <MedecinHoraires
+                  horaires={horaires}
+                  setHoraires={setHoraires}
+                />
               </Grid>
             </Grid>
 

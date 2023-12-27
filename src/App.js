@@ -9,10 +9,10 @@ import MedecinUpdate from './pages/Medecins/updateMedecin/MedecinUpdate';
 import PatientsList from './pages/Patients/PatientsList/PatientsList';
 import PatientAdd from './pages/Patients/addPatient/PatientAdd';
 import PatientUpdate from './pages/Patients/updatePatient/PatientUpdate';
-import Schedule from './pages/RendezVous/Schedule';
 import RendezVousList from './pages/RendezVous/RendezVousList';
 import UpdateStatusRendezVous from './pages/RendezVous/UpdateStatusRendezVous';
 import DossierMedicalList from './pages/DossierMedical/DossierMedicalList';
+import ConsultationAdd from './pages/Consultation/ConsultationAdd';
 
 function App() {
 
@@ -32,6 +32,7 @@ function App() {
             <Route path="/rendez_vous" element={<RendezVousList/>} />
             <Route path="/rendez_vous_list" element={<UpdateStatusRendezVous/>} />
             <Route path="/dossiersMedicaux" element={<DossierMedicalList/>} />
+            <Route path="/consultations/add/:id" element={<ConsultationAdd/>} />
 
 
         </Routes>

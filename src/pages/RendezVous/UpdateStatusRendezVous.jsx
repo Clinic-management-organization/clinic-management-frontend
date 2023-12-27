@@ -1,14 +1,13 @@
 // Importez les dépendances nécessaires
 import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Close, DeleteOutline, Done } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { Close, Done } from "@mui/icons-material";
 import { Typography, IconButton } from "@mui/material";
-import { getRendezVousByMedecinID, updateRendezVousByID, updateStatusRendezVousByID } from "../../services/RendezVousServices";
+import { getRendezVousByMedecinID, updateStatusRendezVousByID } from "../../services/RendezVousServices";
 
 const UpdateStatusRendezVous = () => {
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
+  
 
   useEffect(() => {
     const fetchData = async () => {

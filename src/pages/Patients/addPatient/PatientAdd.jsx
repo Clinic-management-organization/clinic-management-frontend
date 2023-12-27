@@ -9,9 +9,6 @@ import {
   TextField,
   Grid,
   Button,
-  FormControlLabel,
-  Checkbox,
-  InputAdornment,
 } from "@mui/material";
 import { ThemeProvider } from "@mui/system";
 import { PersonAddAlt1 as PersonAddAlt1Icon } from "@mui/icons-material";

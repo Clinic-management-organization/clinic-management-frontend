@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {
     FormControl,
-    InputLabel,
+   
     Select,
     Typography,
-    Grid,
-    TextField,
-    Container
+  
 } from '@mui/material';
-import Appointment from './Appointment';
+
 import Schedule from './Schedule';
-import {getAllRendezVous, addRendezVous, getRendezVousByMedecinID} from '../../services/RendezVousServices'
+import {getRendezVousByMedecinID} from '../../services/RendezVousServices'
 import {getAllMedecins} from '../../services/MedecinServices'
 
 const RendezVousList = () => {
@@ -26,7 +24,7 @@ const RendezVousList = () => {
              // Reformater les données avant de les stocker dans le state
              const formattedRdvs = res.map((rdv) => ({
                Id: rdv.id,
-               Subject: rdv.motif || 'Indosponible', // Remplacez 'Default Subject' par une valeur par défaut si motif est null
+               Subject: rdv.motif || 'Indisponible', // Remplacez 'Default Subject' par une valeur par défaut si motif est null
                StartTime: new Date(rdv.dateRendezVous),
                EndTime: new Date(new Date(rdv.dateRendezVous).getTime() + 60 * 60 * 1000),
              }));
