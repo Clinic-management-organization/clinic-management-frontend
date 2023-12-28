@@ -32,7 +32,8 @@ function App() {
             <Route path="/medecins/update/:id" element={<MedecinUpdate/>} />
             <Route path="/rendez_vous" element={<RendezVousList/>} />
             <Route path="/rendez_vous_list" element={<UpdateStatusRendezVous/>} />
-            <Route path="/dossiersMedicaux" element={<DossierMedicalAdd/>} />
+            <Route path="/dossiersMedicaux" element={<DossierMedicalList/>} />
+            <Route path="/dossiersMedicaux/add" element={<DossierMedicalAdd/>} />
             <Route path="/consultations/add/:id" element={<ConsultationAdd/>} />
 
 

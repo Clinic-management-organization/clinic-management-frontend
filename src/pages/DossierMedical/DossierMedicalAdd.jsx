@@ -131,7 +131,7 @@ const DossierMedicalAdd = () => {
                   variant="outlined"
                   fullWidth
                   onClick={() => {
-                    navigate("/dossiers-medicaux");
+                    navigate("/dossiersMedicaux");
                   }}
                   sx={{
                     mt: 3,

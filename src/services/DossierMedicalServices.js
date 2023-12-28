@@ -35,6 +35,7 @@ export const addDossierMedical = async (dossierMedical) => {
 
     try {
         const response = await axios.post(url, { ...dossierMedical });
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error("Error adding dossier medical:", error);
