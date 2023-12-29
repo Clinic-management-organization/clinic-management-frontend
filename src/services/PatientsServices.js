@@ -2,6 +2,24 @@ import axios from "axios";
 
 const Backend_URL = "http://127.0.0.1:8080/";
 
+export const searchPatients = async (searchCriteria) => {
+  const endPoint = `api/patients/search`;
+  const url = Backend_URL + endPoint;
+
+  const response = await axios
+    .get(url, { params: searchCriteria })
+    .then((res) => {
+      console.log("searchPatients from Backend:", res.data);
+      return res.data;
+    })
+    .catch((err) => {
+      console.log("searchPatients error:", err);
+      return { success: false, status: "res.status", message: err };
+    });
+
+  return response;
+};
+
 export const getAllPatients = async () => {
     const endPoint = `api/patients`;
     const url = Backend_URL + endPoint;
@@ -9,7 +27,7 @@ export const getAllPatients = async () => {
     const response = await axios
       .get(url)
       .then((res) => {
-        
+
         return  res.data ;
       })
       .catch((err) => {

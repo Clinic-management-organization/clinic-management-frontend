@@ -68,7 +68,6 @@ const RendezVousList = () => {
     const medecin = medecins.find(
       (medecin) => medecin.id == selectedMedecinId
     );
-    console.log("le9it medecin", medecin);
     setSelectedMedecin(medecin);
   };
 

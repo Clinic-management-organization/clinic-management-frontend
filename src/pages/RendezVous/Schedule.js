@@ -1,25 +1,15 @@
 import * as React from 'react';
-import { useEffect, useState } from "react";
 import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject } from '@syncfusion/ej2-react-schedule';
-import { getAllRendezVous, addRendezVous } from '../../services/RendezVousServices'
+import { addRendezVous, deleteRendezVousByID, updateRendezVousByID } from '../../services/RendezVousServices'
 
 const Schedule = ({ rdvs, setRdvs, medecin }) => {
 
-  // const formattedRdvsToData = (res) => {
-  //          // Reformater les données avant de les stocker dans le state
-  //          const formattedRdvs = res.map((rdv) => ({
-  //            Id: rdv.id,
-  //            Subject: rdv.motif || 'Indisponible', // Remplacez 'Default Subject' par une valeur par défaut si motif est null
-  //            StartTime: new Date(rdv.dateRendezVous),
-  //            EndTime: new Date(new Date(rdv.dateRendezVous).getTime() + 60 * 60 * 1000),
-  //          }));
-  //          return formattedRdvs
-  // }
   const formattedDataToRdv = (res) => {
     // Reformater les rendezVous avant de les stocker dans la base
     const formattedRdvs = res?.map((rdv) => ({
       id: rdv.Id,
       motif: rdv.Subject || 'Indosponible',
+      etatRDV : "CONFIRMEE",
       dateRendezVous: new Date(rdv.StartTime),
       remarques: rdv?.Description,
       patient: rdv.patient || {
@@ -39,28 +29,38 @@ const Schedule = ({ rdvs, setRdvs, medecin }) => {
       },
       medecin: rdv.medecin || medecin,
     }));
-    
+
     return formattedRdvs;
   };
 
 
   const handleActionComplete = async (args) => {
-    if (
-      (args.requestType === 'eventCreated' || args.requestType === 'eventChanged') &&
-      Array.isArray(args.data) &&
-      args.data.length > 0
-    ) {
-      const formattedRdv = formattedDataToRdv(args.data); // Prenez le premier élément du tableau args.data
-      console.log('formattedRdv', formattedRdv); // Ajoutez ce log pour déboguer
-      const addedRdv = await addRendezVous(formattedRdv);
+    //add a rendez vous
+    if (args.requestType === 'eventCreated')  {
+      const formattedRdv = formattedDataToRdv(args.data);
+      console.log('formattedRdv', formattedRdv[0]); // Ajoutez ce log pour déboguer
+      const addedRdv = await addRendezVous(formattedRdv[0]);
       console.log('addedRdv', addedRdv); // Ajoutez ce log pour déboguer
       // Mise à jour du state avec le rendez-vous ajouté
-      setRdvs([...rdvs, addedRdv]);
-    } else if (args.requestType === 'eventRemoved' && Array.isArray(args.data) && args.data.length > 0) {
+      setRdvs([...rdvs, formattedRdv[0]]);
+    }
+    //update a rendez vous
+    if (args.requestType === 'eventChanged'){
+      const formattedRdv = formattedDataToRdv(args.data);
+      console.log('formattedRdv à modifer', formattedRdv[0]);
+      const updateRendezVous = await updateRendezVousByID(formattedRdv[0]?.id, formattedRdv[0]);
+      const updatedRdvs = rdvs.filter((rdv) => rdv.Id !== formattedRdv[0]?.id);
+      console.log('updateRendezVous', updateRendezVous);
+      // Mise à jour du state avec le rendez-vous ajouté
+      setRdvs([...updatedRdvs, formattedRdv[0]]);
+    }
+    //delete a rendez vous
+    if (args.requestType === 'eventRemoved') {
       const removedRdvId = args.data[0]?.Id;
+      console.log('removedRdvId à supprimer', removedRdvId); // Ajoutez ce log pour déboguer
       if (removedRdvId) {
-        // Filtrer les rendez-vous pour exclure celui qui a été supprimé
         const updatedRdvs = rdvs.filter((rdv) => rdv.Id !== removedRdvId);
+        await deleteRendezVousByID(removedRdvId)
         setRdvs(updatedRdvs);
       }
     }

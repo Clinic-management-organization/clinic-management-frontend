@@ -1,25 +1,60 @@
 import { DeleteOutline } from "@mui/icons-material";
+import { Button,
+        TextField,
+        FormControl,
+        InputLabel,
+        Select,
+        MenuItem,
+       } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { deletePatientByID, getAllPatients } from "../../../services/PatientsServices";
+import { deletePatientByID, getAllPatients, searchPatients } from "../../../services/PatientsServices";
 import "./index.css";
-import {Button} from "@mui/material";
 const PatientsList = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate()
+  const [searchCriteria, setSearchCriteria] = useState({
+      nom: "",
+      prenom: "",
+      tel: "",
+      sexe: "",
+    });
+
+
+  const fetchData = async () => {
+    const res = searchCriteria.nom || searchCriteria.prenom || searchCriteria.tel || searchCriteria.sexe
+      ? await searchPatients(searchCriteria)
+      : await getAllPatients();
+    setData(res);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await getAllPatients();
-      setData(res);
+      fetchData();
+    }, []);
+
+    /*
+    //real time get data
+      useEffect(() => {
+        fetchData();
+      }, [searchCriteria]);*/
+
+
+    const handleSearch = () => {
+      fetchData();
     };
-    fetchData();
-  }, []);
+
 
   const handleDelete = async (id) => {
     await deletePatientByID(id);
     setData(data.filter((item) => item.id !== id));
+  };
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setSearchCriteria((prevCriteria) => ({
+      ...prevCriteria,
+      [name]: value,
+    }));
   };
   const columns = [
     { field: "nom", headerName: "Nom", width: 100 },
@@ -78,18 +113,62 @@ const PatientsList = () => {
     },
   ];
 
+
   return (
       <div className="main">
        <div className="head">
-         <Button
-           id="add"
-           variant="outlined"
-           onClick={() => {
-             navigate(`add`);
-           }}
-         >
-           Ajouter
-         </Button>
+         <div style={{display: 'flex', gap: "1%"}}>
+           <TextField
+              name="nom"
+              label="Nom"
+              variant="outlined"
+              value={searchCriteria.nom}
+              onChange={handleInputChange}
+            />
+            <TextField
+              name="prenom"
+              label="Prénom"
+              variant="outlined"
+              value={searchCriteria.prenom}
+              onChange={handleInputChange}
+            />
+            <TextField
+              name="tel"
+              label="Numéro de téléphone"
+              variant="outlined"
+              value={searchCriteria.tel}
+              onChange={handleInputChange}
+            />
+            <FormControl variant="outlined" sx={{width: '10%'}}>
+              <InputLabel id="sexe-label">Sexe</InputLabel>
+              <Select
+                fullWidth
+                name="sexe"
+                label="Sexe"
+                value={searchCriteria.sexe}
+                onChange={handleInputChange}
+              >
+                <MenuItem value="F">Female</MenuItem>
+                <MenuItem value="H">Male</MenuItem>
+              </Select>
+            </FormControl>
+            <Button
+              id="search"
+              variant="outlined"
+              onClick={handleSearch}
+            >
+              Rechercher
+            </Button>
+          <Button
+            variant="outlined"
+            color="warning"
+            onClick={() => {
+              navigate(`add`);
+            }}
+          >
+            Ajouter
+          </Button>
+         </div>
         </div>
         <DataGrid
           rows={data}
