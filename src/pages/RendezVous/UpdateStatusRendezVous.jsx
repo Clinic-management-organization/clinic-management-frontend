@@ -1,5 +1,6 @@
 // Importez les dépendances nécessaires
 import React, { useState, useEffect } from "react";
+import { format } from "date-fns";
 import { DataGrid } from "@mui/x-data-grid";
 import { Close, Done } from "@mui/icons-material";
 import { Typography, IconButton, TextField, Button, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
@@ -22,6 +23,7 @@ const UpdateStatusRendezVous = () => {
 
   const fetchData = async () => {
     const res = await searchRendezVous(searchParams);
+	console.log("res", res)
     setData(res);
   };
 
@@ -41,7 +43,10 @@ const UpdateStatusRendezVous = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setSearchParams((prevParams) => ({ ...prevParams, [name]: value }));
+	const convertedValue =
+		name === "dateRendezVous" ? format(new Date(value), "yyyy-MM-dd") : value;
+	console.log("convertedValue", convertedValue)
+    setSearchParams((prevParams) => ({ ...prevParams, [name]: convertedValue }));
   };
 
   const columns = [
