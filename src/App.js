@@ -34,7 +34,7 @@ function App() {
             <Route path="/rendez_vous_list" element={<UpdateStatusRendezVous/>} />
             <Route path="/dossiersMedicaux" element={<DossierMedicalList/>} />
             <Route path="/dossiersMedicaux/add" element={<DossierMedicalAdd/>} />
-            <Route path="/consultations/add/:id" element={<ConsultationAdd/>} />
+            <Route path="/consultations/add-to-dossier/:dossierID" element={<ConsultationAdd/>} />
 
 
         </Routes>

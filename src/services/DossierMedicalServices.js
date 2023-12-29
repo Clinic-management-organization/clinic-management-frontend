@@ -34,7 +34,7 @@ export const addDossierMedical = async (dossierMedical) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.post(url, { ...dossierMedical });
+        const response = await axios.post(url, JSON.stringify({ ...dossierMedical }), { headers: { 'Content-Type': 'application/json' } });
         console.log(response.data);
         return response.data;
     } catch (error) {

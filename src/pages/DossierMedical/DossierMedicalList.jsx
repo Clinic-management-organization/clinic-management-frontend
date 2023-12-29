@@ -75,10 +75,13 @@ const DossierMedicalList = () => {
     setOpenDiagnosticModal(false);
     setSelectedDiagnostic([]);
   };
-  const handleEdit = (dossierId) => {
+  const addConsultation = (dossierId) => {
     console.log(`Éditer le dossier médical avec l'ID : ${dossierId}`);
     // Naviguer vers la page d'édition de consultation
-    navigate(`/consultations/add/${dossierId}`);
+    navigate(`/consultations/add-to-dossier/${dossierId}`);
+  };
+  const addRDV = () => {
+    navigate(`/rendez_vous`);
   };
 
   return (
@@ -86,6 +89,17 @@ const DossierMedicalList = () => {
       <Typography component="h1" variant="h5" style={{ marginBottom: "10%" }}>
         Les Dossiers Médicaux
       </Typography>
+      <div className="head">
+        <Button
+          id="add"
+          variant="outlined"
+          onClick={() => {
+            navigate(`add`);
+          }}
+        >
+          Ajouter
+        </Button>
+      </div>
       {Array.isArray(dossiersMedicaux) ? (
         dossiersMedicaux?.map((dossier, index) => (
           <Accordion
@@ -122,7 +136,7 @@ const DossierMedicalList = () => {
                   <React.Fragment key={consultation.id}>
                     <ListItem>
                       <ListItemText
-                        primary={`ID: ${consultation.id}`}
+                        // primary={`ID: ${consultation.id}`}
                         secondary={
                           <React.Fragment>
                             <Typography
@@ -167,9 +181,9 @@ const DossierMedicalList = () => {
                 handleClose={handleCloseTraitementModal}
                 traitements={selectedTraitement}
               />
-               {/* Bouton Edit en bas à droite */}
-               <Button
-                onClick={() => handleEdit(dossier?.id)}
+              {/* Bouton Edit en bas à droite */}
+              <Button
+                onClick={() => addConsultation(dossier?.id)}
                 variant="contained"
                 color="primary"
                 style={{ marginTop: "auto", alignSelf: "flex-end" }}
@@ -224,8 +238,14 @@ const DossierMedicalList = () => {
                   </React.Fragment>
                 ))}
               </List>
-
-             
+              <Button
+                onClick={() => addRDV()}
+                variant="contained"
+                color="primary"
+                style={{ marginTop: "auto", alignSelf: "flex-end" }}
+              >
+                Ajouter Rendez-vous
+              </Button>
             </AccordionDetails>
           </Accordion>
         ))

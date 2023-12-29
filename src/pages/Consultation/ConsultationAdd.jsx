@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Container,
   CssBaseline,
@@ -15,11 +15,12 @@ import { PersonAddAlt1 as PersonAddAlt1Icon } from "@mui/icons-material";
 import { Toaster } from "react-hot-toast";
 import { addConsultation } from "../../services/ConsultationService";
 
-// Ajoutez vos styles CSS personnalisés ici si nécessaire
 const theme = {};
 
 const ConsultationAdd = () => {
   const navigate = useNavigate();
+  const { dossierID } = useParams();
+
   const [formData, setFormData] = useState({
     prix: "",
     synthese: "",
@@ -36,14 +37,12 @@ const ConsultationAdd = () => {
   };
 
   const handleAddDiagnostic = () => {
-    // Vérifier si tous les champs de diagnostic sont remplis avant d'ajouter
     if (
       formData.description &&
       formData.category &&
       formData.maladie &&
       formData.diagnosticConfirme
     ) {
-      // Ajouter le diagnostic actuel au tableau
       setFormData((prevData) => ({
         ...prevData,
         diagnostics: [
@@ -55,7 +54,6 @@ const ConsultationAdd = () => {
             diagnosticConfirme: formData.diagnosticConfirme,
           },
         ],
-        // Réinitialiser les champs de diagnostic
         description: "",
         category: "",
         maladie: "",
@@ -65,7 +63,6 @@ const ConsultationAdd = () => {
   };
 
   const handleAddTraitement = () => {
-    // Vérifier si tous les champs de traitement sont remplis avant d'ajouter
     if (
       formData.medicament &&
       formData.dosage &&
@@ -73,7 +70,6 @@ const ConsultationAdd = () => {
       formData.startDate &&
       formData.endDate
     ) {
-      // Ajouter le traitement actuel au tableau
       setFormData((prevData) => ({
         ...prevData,
         traitements: [
@@ -86,7 +82,6 @@ const ConsultationAdd = () => {
             endDate: formData.endDate,
           },
         ],
-        // Réinitialiser les champs de traitement
         medicament: "",
         dosage: "",
         instructions: "",
@@ -99,26 +94,15 @@ const ConsultationAdd = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Récupérer l'ID à partir de l'URL en utilisant la fonction modifiée addConsultation
-    const dossierID = getDossierIDFromURL();
-
-    // Ajouter les diagnostics et les traitements à formData
     const newFormData = {
       ...formData,
       diagnostics: [...formData.diagnostics],
       traitements: [...formData.traitements],
     };
 
-    // Appel de la fonction addConsultation avec les deux paramètres
     addConsultation(dossierID, newFormData).then(() => {
       navigate("/dossiersMedicaux");
     });
-  };
-
-  // Fonction pour extraire l'ID à partir de l'URL
-  const getDossierIDFromURL = () => {
-    // Utilisez la même logique que dans la fonction addConsultation modifiée
-    return window.location.pathname.split("/").pop();
   };
 
   return (
@@ -149,7 +133,6 @@ const ConsultationAdd = () => {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2} style={{ marginBottom: "2%" }}>
-              {/* Ajoutez les champs de formulaire avec les noms correspondants */}
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="Prix"
@@ -197,7 +180,6 @@ const ConsultationAdd = () => {
                   onChange={handleChange}
                 />
               </Grid>
-
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="Diagnostic Confirmé"
@@ -275,7 +257,6 @@ const ConsultationAdd = () => {
                   onChange={handleChange}
                 />
               </Grid>
-
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="Traitement End Date"

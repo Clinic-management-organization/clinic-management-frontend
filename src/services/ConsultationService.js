@@ -29,25 +29,25 @@ export const deleteConsultation = async (dossierMedicalID) => {
     }
 };
 
-export const addConsultation = async (dossierID,consultation) => {
+export const addConsultation = async (dossierID, consultation) => {
     const endPoint = `api/consultations/add-to-dossier/${dossierID}`;
     const url = Backend_URL + endPoint;
-    console.log(consultation);
 
     try {
-        const response = await axios.post(url, { ...consultation }, {
+        const response = await axios.post(url, consultation, {
             headers: {
                 'Content-Type': 'application/json',
             },
         });
-        console.log(response.data);
 
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error("Error adding consultation:", error);
         return { success: false, message: error.message };
     }
 };
+
 
 export const updateConsultationByID = async (consultationID, consultationInfo) => {
     const endPoint = `api/consultations/update/${consultationID}`;
