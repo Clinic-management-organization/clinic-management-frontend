@@ -1,4 +1,4 @@
-.btn-grad {
+.btn-gradd {
     background-image: linear-gradient(
       to right,
       #83a4d4 0%,
@@ -6,19 +6,19 @@
       #83a4d4 100%
     );
     margin: 10px;
-    padding: 15px 45px;
+    padding: 10px 45px;
     text-align: center;
     text-transform: uppercase;
     transition: 0.5s;
     background-size: 200% auto;
     color: white;
-    left:94%;
+    right: 5%;
     box-shadow: 0 0 20px #eee;
     border-radius: 10px;
     display: block;
   }
   
-  .btn-grad:hover {
+  .btn-gradd:hover {
     background-position: right center; /* change the direction of the change here */
     color: #fff;
     text-decoration: none;

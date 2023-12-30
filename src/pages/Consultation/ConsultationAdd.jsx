@@ -11,7 +11,10 @@ import {
   Button,
 } from "@mui/material";
 import { ThemeProvider } from "@mui/system";
-import { PersonAddAlt1 as PersonAddAlt1Icon } from "@mui/icons-material";
+import {
+  Article,
+  PersonAddAlt1 as PersonAddAlt1Icon,
+} from "@mui/icons-material";
 import { Toaster } from "react-hot-toast";
 import { addConsultation } from "../../services/ConsultationService";
 
@@ -119,9 +122,9 @@ const ConsultationAdd = () => {
           }}
         >
           <Avatar
-            sx={{ m: 1, bgcolor: "rgb(131,58,180)", width: 70, height: 70 }}
+            sx={{ m: 1, bgcolor: "rgb(100,149,237)", width: 70, height: 70 }}
           >
-            <PersonAddAlt1Icon style={{ width: 40, height: 40 }} />
+            <Article style={{ width: 40, height: 40 }} />
           </Avatar>
           <Typography component="h1" variant="h5">
             Ajouter une Consultation
@@ -190,8 +193,9 @@ const ConsultationAdd = () => {
               </Grid>
             </Grid>
             <Button
+            className="btn-g"
               type="button"
-              variant="outlined"
+              variant="contained"
               onClick={handleAddDiagnostic}
             >
               Ajouter Diagnostic
@@ -216,7 +220,7 @@ const ConsultationAdd = () => {
                 </ul>
               </div>
             ) : (
-              <div>hhhh</div>
+              <div></div>
             )}
 
             <Typography variant="h6">Ajouter Traitements</Typography>
@@ -251,25 +255,32 @@ const ConsultationAdd = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   type="date"
-                  label="Traitement Start Date"
+                  label="Date Début"
                   name="startDate"
                   value={formData.startDate}
                   onChange={handleChange}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Traitement End Date"
+                  label="Date Fin"
                   type="date"
                   name="endDate"
                   value={formData.endDate}
                   onChange={handleChange}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               </Grid>
             </Grid>
             <Button
+            className="btn-g"
               type="button"
-              variant="outlined"
+              variant="contained"
               onClick={handleAddTraitement}
             >
               Ajouter Traitement
@@ -300,12 +311,13 @@ const ConsultationAdd = () => {
                 </ul>
               </div>
             ) : (
-              <div>hhhh</div>
+              <div></div>
             )}
 
             <Grid container spacing={2} style={{ marginBottom: "2%" }}>
               <Grid item xs={12} sm={6}>
                 <Button
+                  className="btn-g"
                   type="submit"
                   fullWidth
                   variant="contained"
@@ -321,7 +333,8 @@ const ConsultationAdd = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Button
-                  variant="outlined"
+                  className="btn-g"
+                  variant="contained"
                   fullWidth
                   onClick={() => {
                     navigate("/dossiersMedicaux");
@@ -329,13 +342,8 @@ const ConsultationAdd = () => {
                   sx={{
                     mt: 3,
                     mb: 2,
-                    borderColor: "rgb(131,58,180);",
-                    color: "rgb(131,58,180);",
-                    "&:hover": {
-                      borderColor: "hsl(18, 100%, 66%)",
-                      color: "hsl(18, 100%, 66%)",
-                      backgroundColor: "#ffff",
-                    },
+                    bgcolor: "rgb(131,58,180)",
+                    "&:hover": { backgroundColor: "hsl(18, 100%, 66%)" },
                   }}
                 >
                   Annuler

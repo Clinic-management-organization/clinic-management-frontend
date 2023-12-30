@@ -1,4 +1,4 @@
-import { HealthAndSafety, Mail, Notifications, School } from "@mui/icons-material";
+import { HealthAndSafety, Mail, Notifications } from "@mui/icons-material";
 import {
   AppBar,
   Avatar,
@@ -20,7 +20,7 @@ const StyledToolbar = styled(Toolbar)({
   display: "flex",
   justifyContent: "space-between",
   background:
-    "linear-gradient(50deg, rgba(131,58,180,1) 0%, rgba(141,29,253,1) 0%, rgba(252,176,69,1) 100%)",
+    "linear-gradient(95deg, rgba(137,207,240,1) 0%, rgba(52,95,180,1) 51%, rgba(137,207,240,1) 100%);",
 });
 
 const Search = styled("div")(({ theme }) => ({
@@ -77,10 +77,12 @@ const Navbar = ({ socket }) => {
   return (
     <AppBar position="sticky">
       <StyledToolbar>
-        <Typography variant="h6" sx={{ display: { xs: "none", sm: "block" } }}>
-          <HealthAndSafety />
-          Clinique
-        </Typography>
+      <Typography variant="h6" sx={{ display: { xs: "none", sm: "flex" }, alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', pr: 1 }}>
+        <HealthAndSafety sx={{ fontSize: 32 }}  />
+      </Box>
+      Clinique
+    </Typography>
         <HealthAndSafety sx={{ display: { xs: "block", sm: "none" } }} />
         <Search>
           <InputBase placeholder="Rechercher..." />

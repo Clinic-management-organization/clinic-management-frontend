@@ -16,7 +16,7 @@ import React, { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import MedecinHoraires from "./MedecinHoraires";
-
+import './index.css'
 import { addMedecin } from "../../../services/MedecinServices";
 // Ajoutez vos styles CSS personnalisés ici si nécessaire
 const theme = {};
@@ -70,7 +70,7 @@ const MedecinAdd = () => {
           }}
         >
           <Avatar
-            sx={{ m: 1, bgcolor: "rgb(131,58,180)", width: 70, height: 70 }}
+            sx={{ m: 1, bgcolor: "rgb(100,149,237)", width: 70, height: 70 }}
           >
             <PersonAddAlt1Icon style={{ width: 40, height: 40 }} />
           </Avatar>
@@ -186,13 +186,14 @@ const MedecinAdd = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <Button
+                  className="btn-gr"
                   type="submit"
                   fullWidth
                   variant="contained"
                   sx={{
                     mt: 3,
                     mb: 2,
-                    bgcolor: "rgb(131,58,180)",
+                    bgcolor: "rgb(100,149,237)",
                     "&:hover": { backgroundColor: "hsl(18, 100%, 66%)" },
                   }}
                 >
@@ -201,7 +202,8 @@ const MedecinAdd = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Button
-                  variant="outlined"
+                  className="btn-gr"
+                  variant="contained"
                   fullWidth
                   onClick={() => {
                     navigate("/patients");
@@ -209,13 +211,8 @@ const MedecinAdd = () => {
                   sx={{
                     mt: 3,
                     mb: 2,
-                    borderColor: "rgb(131,58,180);",
-                    color: "rgb(131,58,180);",
-                    "&:hover": {
-                      borderColor: "hsl(18, 100%, 66%)",
-                      color: "hsl(18, 100%, 66%)",
-                      backgroundColor: "#ffff",
-                    },
+                    bgcolor: "rgb(100,149,237)",
+                    "&:hover": { backgroundColor: "hsl(18, 100%, 66%)" },
                   }}
                 >
                   Annuler

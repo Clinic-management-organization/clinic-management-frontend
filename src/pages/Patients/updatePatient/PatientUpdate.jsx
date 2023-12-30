@@ -70,7 +70,7 @@ import { getPatientByID, updatePatientByID } from "../../../services/PatientsSer
         <div className="userTitleContainer">
           <Toaster />
           <h1 className="userTitle">Modifier profil patient</h1>
-          <button onClick={() => { navigate('/patients/add') }} className="userAddButton">Ajouter</button>
+          <button onClick={() => { navigate('/patients/add') }} className="btn-grad">Ajouter</button>
         </div>
         <div className="userContainer">
           <div className="userShow">
@@ -177,7 +177,7 @@ import { getPatientByID, updatePatientByID } from "../../../services/PatientsSer
                   />
                 </div>
                 {/* Ajoutez d'autres champs selon vos besoins */}
-                <button type="submit" className="userUpdateButton">Modifier</button>
+                <button type="submit" className="btn-grad">Modifier</button>
               </div>
             </form>
           </div>

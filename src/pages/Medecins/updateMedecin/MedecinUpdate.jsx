@@ -92,7 +92,7 @@ const MedecinUpdate = () => {
           onClick={() => {
             navigate("/medecins/add");
           }}
-          className="userAddButton"
+          className="btn-grad"
         >
           Ajouter
         </button>
@@ -218,7 +218,7 @@ const MedecinUpdate = () => {
               <button
                 style={{ marginTop: 15 }}
                 type="submit"
-                className="userUpdateButton"
+                className="btn-grad"
               >
                 Modifier
               </button>

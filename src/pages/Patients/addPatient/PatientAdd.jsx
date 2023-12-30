@@ -13,8 +13,8 @@ import {
 import { ThemeProvider } from "@mui/system";
 import { PersonAddAlt1 as PersonAddAlt1Icon } from "@mui/icons-material";
 import { Toaster } from "react-hot-toast";
-import {addPatient} from '../../../services/PatientsServices'
-
+import { addPatient } from "../../../services/PatientsServices";
+import './index.css'
 // Ajoutez vos styles CSS personnalisés ici si nécessaire
 const theme = {};
 
@@ -44,10 +44,9 @@ const PatientAdd = () => {
     e.preventDefault();
     const info = new FormData(e.currentTarget);
     console.log("data", formData);
-    addPatient( formData).then(()=>{
-      navigate('/patients')
-    })
-
+    addPatient(formData).then(() => {
+      navigate("/patients");
+    });
   };
 
   return (
@@ -64,7 +63,7 @@ const PatientAdd = () => {
           }}
         >
           <Avatar
-            sx={{ m: 1, bgcolor: "rgb(131,58,180)", width: 70, height: 70 }}
+            sx={{ m: 1, bgcolor: "rgb(100,149,237)", width: 70, height: 70 }}
           >
             <PersonAddAlt1Icon style={{ width: 40, height: 40 }} />
           </Avatar>
@@ -98,88 +97,88 @@ const PatientAdd = () => {
                 />
               </Grid>
 
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    label="Date de naissance"
-                    name="dateNaissance"
-                    type="date"
-                    value={formData.dateNaissance}
-                    onChange={handleChange}
-                    fullWidth
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    required
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    label="Sexe"
-                    name="sexe"
-                    value={formData.sexe}
-                    onChange={handleChange}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Adresse"
-                    name="adresse"
-                    value={formData.adresse}
-                    onChange={handleChange}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    label="Téléphone"
-                    name="tel"
-                    value={formData.tel}
-                    onChange={handleChange}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    label="Email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    label="Situation Familiale"
-                    name="situationFamilliale"
-                    value={formData.situationFamilliale}
-                    onChange={handleChange}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    label="Assurance Médicale"
-                    name="assuranceMedicale"
-                    value={formData.assuranceMedicale}
-                    onChange={handleChange}
-                    fullWidth
-                  />
-                </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Date de naissance"
+                  name="dateNaissance"
+                  type="date"
+                  value={formData.dateNaissance}
+                  onChange={handleChange}
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  required
+                />
               </Grid>
-
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Sexe"
+                  name="sexe"
+                  value={formData.sexe}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Adresse"
+                  name="adresse"
+                  value={formData.adresse}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Téléphone"
+                  name="tel"
+                  value={formData.tel}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Situation Familiale"
+                  name="situationFamilliale"
+                  value={formData.situationFamilliale}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Assurance Médicale"
+                  name="assuranceMedicale"
+                  value={formData.assuranceMedicale}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
 
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <Button
+                  className="btn-gradd"
                   type="submit"
                   fullWidth
                   variant="contained"
                   sx={{
                     mt: 3,
                     mb: 2,
-                    bgcolor: "rgb(131,58,180)",
+                    bgcolor: "rgb(100,149,237)",
                     "&:hover": { backgroundColor: "hsl(18, 100%, 66%)" },
                   }}
                 >
@@ -188,7 +187,8 @@ const PatientAdd = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Button
-                  variant="outlined"
+                   className="btn-gradd"
+                  variant="contained"
                   fullWidth
                   onClick={() => {
                     navigate("/patients");
@@ -196,13 +196,8 @@ const PatientAdd = () => {
                   sx={{
                     mt: 3,
                     mb: 2,
-                    borderColor: "rgb(131,58,180);",
-                    color: "rgb(131,58,180);",
-                    "&:hover": {
-                      borderColor: "hsl(18, 100%, 66%)",
-                      color: "hsl(18, 100%, 66%)",
-                      backgroundColor: "#ffff",
-                    },
+                    bgcolor: "rgb(100,149,237)",
+                    "&:hover": { backgroundColor: "hsl(18, 100%, 66%)" },
                   }}
                 >
                   Annuler

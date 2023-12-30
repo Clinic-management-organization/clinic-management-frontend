@@ -11,9 +11,11 @@ import PatientAdd from './pages/Patients/addPatient/PatientAdd';
 import PatientUpdate from './pages/Patients/updatePatient/PatientUpdate';
 import RendezVousList from './pages/RendezVous/RendezVousList';
 import UpdateStatusRendezVous from './pages/RendezVous/UpdateStatusRendezVous';
-import DossierMedicalList from './pages/DossierMedical/DossierMedicalList';
+
 import ConsultationAdd from './pages/Consultation/ConsultationAdd';
-import DossierMedicalAdd from './pages/DossierMedical/DossierMedicalAdd';
+import DossierMedicalAdd from './pages/DossierMedical/addDossierMedical/DossierMedicalAdd';
+import DossierMedicalList from './pages/DossierMedical/ListDossierMedical/DossierMedicalList';
+
 
 function App() {
 

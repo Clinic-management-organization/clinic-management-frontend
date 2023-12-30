@@ -4,7 +4,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { getAllDossiersMedicaux } from "../../services/DossierMedicalServices";
+
 import {
   Button,
   Container,
@@ -14,9 +14,10 @@ import {
   ListItemText,
 } from "@mui/material";
 import { format } from "date-fns";
-import ListTraitement from "./ListTraitement";
-import ListDiagnostic from "./ListDiagnostic";
+import ListTraitement from "../ListTraitement";
+import ListDiagnostic from "../ListDiagnostic";
 import { useNavigate } from "react-router-dom";
+import { getAllDossiersMedicaux } from "../../../services/DossierMedicalServices";
 
 const DossierMedicalList = () => {
   const navigate = useNavigate();
@@ -91,8 +92,8 @@ const DossierMedicalList = () => {
       </Typography>
       <div className="head">
         <Button
-          id="add"
-          variant="outlined"
+          className="btn-grad"
+          variant="contained"
           onClick={() => {
             navigate(`add`);
           }}
@@ -183,10 +184,17 @@ const DossierMedicalList = () => {
               />
               {/* Bouton Edit en bas à droite */}
               <Button
+                className="btn-g"
                 onClick={() => addConsultation(dossier?.id)}
                 variant="contained"
                 color="primary"
                 style={{ marginTop: "auto", alignSelf: "flex-end" }}
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  bgcolor: "rgb(100,149,237)",
+                  "&:hover": { backgroundColor: "hsl(18, 100%, 66%)" },
+                }}
               >
                 Ajouter Consultation
               </Button>
@@ -239,9 +247,16 @@ const DossierMedicalList = () => {
                 ))}
               </List>
               <Button
+                className="btn-g"
                 onClick={() => addRDV()}
                 variant="contained"
                 color="primary"
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  bgcolor: "rgb(100,149,237)",
+                  "&:hover": { backgroundColor: "hsl(18, 100%, 66%)" },
+                }}
                 style={{ marginTop: "auto", alignSelf: "flex-end" }}
               >
                 Ajouter Rendez-vous

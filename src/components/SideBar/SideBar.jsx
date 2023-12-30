@@ -43,7 +43,7 @@ const SideBar = () => {
                 className="link"
               >
                 <li className="sidebarListItem">
-                  <BusinessCenter className="sidebarIcon" />
+                  <Person4 className="sidebarIcon" />
                   Patients
                 </li>
               </Link>
@@ -51,7 +51,7 @@ const SideBar = () => {
 
               <Link to="/medecins" className="link">
                 <li className="sidebarListItem">
-                  <BusinessCenter className="sidebarIcon" />
+                  <Person4 className="sidebarIcon" />
                   Médecins
                 </li>
               </Link>
@@ -66,20 +66,20 @@ const SideBar = () => {
 
               <Link to="/rendez_vous_list" className="link">
                 <li className="sidebarListItem">
-                  <Person3 className="sidebarIcon" />
+                  <BusinessCenter className="sidebarIcon" />
                   Liste Rendez-vous
                 </li>
               </Link>
 
               <Link to="/dossiersMedicaux" className="link">
                 <li className="sidebarListItem">
-                  <Person4 className="sidebarIcon" />
+                <Article className="sidebarIcon" />
                   Dossiers Medicaux
                 </li>
               </Link>
 
 
-              <Link to="/events" className="link">
+              {/* <Link to="/events" className="link">
                 <li className="sidebarListItem">
                   <EventNote className="sidebarIcon" />
                   Evénements
@@ -125,7 +125,7 @@ const SideBar = () => {
                   <School className="sidebarIcon" />
                   Université
                 </li>
-              </Link>
+              </Link> */}
           </ul>
         </div>
         <div className="sidebarMenu">

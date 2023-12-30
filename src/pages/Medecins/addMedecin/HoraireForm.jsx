@@ -2,6 +2,7 @@
 
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import React, { useState } from 'react';
+import './index.css'
 
 const HoraireForm = ({ onClick }) => {
   const [dayOfWeek, setDayOfWeek] = useState('');
@@ -49,7 +50,7 @@ const HoraireForm = ({ onClick }) => {
           onChange={(e) => setEndTime(e.target.value)}
         />
       </div>
-      <Button type="submit" variant="contained" color="primary" onClick={handleClick}>
+      <Button  className='btn-grad' type="submit" variant="contained" color="primary" onClick={handleClick}>
         Ajouter Horaire
       </Button>
     </div>

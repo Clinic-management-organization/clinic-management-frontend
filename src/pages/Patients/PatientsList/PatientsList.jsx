@@ -5,6 +5,8 @@ import { Button,
         InputLabel,
         Select,
         MenuItem,
+        Typography,
+        Container,
        } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
@@ -115,7 +117,10 @@ const PatientsList = () => {
 
 
   return (
-      <div className="main">
+    <Container className="container" component="main" style={{ width: "70%" }}>
+       <Typography component="h1" variant="h5" style={{ marginBottom: "3%" }}>
+        Liste des patients
+      </Typography>
        <div className="head">
          <div style={{display: 'flex', gap: "1%"}}>
            <TextField
@@ -160,6 +165,7 @@ const PatientsList = () => {
               Rechercher
             </Button>
           <Button
+          
             variant="outlined"
             color="warning"
             onClick={() => {
@@ -177,7 +183,7 @@ const PatientsList = () => {
           pageSize={8}
           checkboxSelection
         />
-      </div>
+      </Container>
   );
 };
 
