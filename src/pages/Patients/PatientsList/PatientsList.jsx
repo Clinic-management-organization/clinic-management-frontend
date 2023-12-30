@@ -118,8 +118,8 @@ const PatientsList = () => {
 
   return (
     <Container className="container" component="main" style={{ width: "70%" }}>
-       <Typography component="h1" variant="h5" style={{ marginBottom: "3%" }}>
-        Liste des patients
+       <Typography  component="h1" variant="h5" style={{ marginBottom: "3%" }}>
+        Liste des Patients
       </Typography>
        <div className="head">
          <div style={{display: 'flex', gap: "1%"}}>

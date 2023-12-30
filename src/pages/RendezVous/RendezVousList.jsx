@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormControl, Select, Typography } from "@mui/material";
+import { Container, FormControl, Select, Typography } from "@mui/material";
 
 import Schedule from "./Schedule";
 import { getRendezVousByMedecinID } from "../../services/RendezVousServices";
@@ -72,7 +72,7 @@ const RendezVousList = () => {
   };
 
   return (
-    <div style={{ marginLeft: "10%", marginTop: "3%" }}>
+    <Container className="container" component="main" style={{ width: "70%" }}>
       <Typography component="h1" variant="h5" style={{ marginBottom: "3%" }}>
         Planification des Rendez-Vous
       </Typography>
@@ -110,7 +110,7 @@ const RendezVousList = () => {
         </FormControl>
       </div>
       <Schedule rdvs={rdvs} setRdvs={setRdvs} medecin={selectedMedecin} />
-    </div>
+    </Container>
   );
 };
 

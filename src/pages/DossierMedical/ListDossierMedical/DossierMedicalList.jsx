@@ -4,7 +4,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
+import { format } from "date-fns";
 import {
   Button,
   Container,
@@ -13,7 +13,7 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
-import { format } from "date-fns";
+
 import ListTraitement from "../ListTraitement";
 import ListDiagnostic from "../ListDiagnostic";
 import { useNavigate } from "react-router-dom";
@@ -30,6 +30,19 @@ const DossierMedicalList = () => {
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
+  };
+  const formatDate = (dateString) => {
+    const options = {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    };
+
+    const date = new Date(dateString);
+    return date.toLocaleDateString("fr-FR", options);
   };
 
   useEffect(() => {
@@ -88,7 +101,7 @@ const DossierMedicalList = () => {
   return (
     <Container className="container" component="main" style={{ width: "70%" }}>
       <Typography component="h1" variant="h5" style={{ marginBottom: "10%" }}>
-        Les Dossiers Médicaux
+        Liste Des Dossiers Médicaux
       </Typography>
       <div className="head">
         <Button
@@ -118,16 +131,16 @@ const DossierMedicalList = () => {
                 Dossier Médical {index + 1}
               </Typography>
               <Typography sx={{ color: "text.secondary" }}>
-                {dossier?.dateCreation}
+                Crée Le {formatDate(dossier.dateCreation)}
               </Typography>
             </AccordionSummary>
             <AccordionDetails
               style={{ display: "flex", flexDirection: "column" }}
             >
-              <Typography>
-                {`Date de Mise à Jour: ${dossier?.dateMiseAJour}`}
-              </Typography>
               <Typography>{`Observation: ${dossier?.observation}`}</Typography>
+              <Typography>
+                {`Modifié Le : ${formatDate(dossier?.dateMiseAJour)}`}
+              </Typography>
 
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                 Consultations :

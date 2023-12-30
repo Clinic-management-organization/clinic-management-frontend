@@ -93,7 +93,7 @@ const MedecinsList = () => {
   return (
     <Container className="container" component="main" style={{ width: "90%" }}>
       <Typography component="h1" variant="h5" style={{ marginBottom: "3%" }}>
-        Liste des médecins
+        Liste des Médecins
       </Typography>
       <div className="head">
         <Button

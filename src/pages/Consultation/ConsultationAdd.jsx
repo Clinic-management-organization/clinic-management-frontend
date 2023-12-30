@@ -126,7 +126,7 @@ const ConsultationAdd = () => {
           >
             <Article style={{ width: 40, height: 40 }} />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography  component="h1" variant="h5">
             Ajouter une Consultation
           </Typography>
           <Box

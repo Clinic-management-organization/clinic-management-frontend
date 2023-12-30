@@ -40,6 +40,7 @@ const DossierMedicalAdd = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     addDossierMedical(formData).then(() => {});
+    navigate("/dossiersMedicaux");
   };
 
   return (
