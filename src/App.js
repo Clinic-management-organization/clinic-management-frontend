@@ -15,6 +15,7 @@ import UpdateStatusRendezVous from './pages/RendezVous/UpdateStatusRendezVous';
 import ConsultationAdd from './pages/Consultation/ConsultationAdd';
 import DossierMedicalAdd from './pages/DossierMedical/addDossierMedical/DossierMedicalAdd';
 import DossierMedicalList from './pages/DossierMedical/ListDossierMedical/DossierMedicalList';
+import MonthlyIncomeChart from './pages/stat/MonthlyIncomeChart';
 
 
 function App() {
@@ -32,11 +33,12 @@ function App() {
             <Route path="/medecins" element={<MedecinsList />} />
             <Route path="/medecins/add" element={<MedecinAdd />} />
             <Route path="/medecins/update/:id" element={<MedecinUpdate/>} />
-            <Route path="/rendez_vous" element={<RendezVousList/>} />
+            <Route path="/rendez_vous/:dossierID" element={<RendezVousList/>} />
             <Route path="/rendez_vous_list" element={<UpdateStatusRendezVous/>} />
             <Route path="/dossiersMedicaux" element={<DossierMedicalList/>} />
             <Route path="/dossiersMedicaux/add" element={<DossierMedicalAdd/>} />
             <Route path="/consultations/add-to-dossier/:dossierID" element={<ConsultationAdd/>} />
+            <Route path="/" element={<MonthlyIncomeChart/>} />
 
 
         </Routes>

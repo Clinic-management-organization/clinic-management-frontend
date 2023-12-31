@@ -206,7 +206,7 @@ const MedecinAdd = () => {
                   variant="contained"
                   fullWidth
                   onClick={() => {
-                    navigate("/patients");
+                    navigate("/medecins");
                   }}
                   sx={{
                     mt: 3,

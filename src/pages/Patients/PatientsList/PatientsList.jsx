@@ -117,7 +117,7 @@ const PatientsList = () => {
 
 
   return (
-    <Container className="container" component="main" style={{ width: "70%" }}>
+    <Container className="container" component="main" style={{ width: "100%" }}>
        <Typography  component="h1" variant="h5" style={{ marginBottom: "3%" }}>
         Liste des Patients
       </Typography>

@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject } from '@syncfusion/ej2-react-schedule';
-import { addRendezVous, deleteRendezVousByID, updateRendezVousByID } from '../../services/RendezVousServices'
+import { addRendezVous, addRendezVousByDossierId, deleteRendezVousByID, updateRendezVousByID } from '../../services/RendezVousServices'
+import { useParams } from 'react-router-dom';
 
 const Schedule = ({ rdvs, setRdvs, medecin }) => {
+  const { dossierID } = useParams();
 
   const formattedDataToRdv = (res) => {
     // Reformater les rendezVous avant de les stocker dans la base
@@ -39,7 +41,7 @@ const Schedule = ({ rdvs, setRdvs, medecin }) => {
     if (args.requestType === 'eventCreated')  {
       const formattedRdv = formattedDataToRdv(args.data);
       console.log('formattedRdv', formattedRdv[0]); // Ajoutez ce log pour déboguer
-      const addedRdv = await addRendezVous(formattedRdv[0]);
+      const addedRdv = await addRendezVousByDossierId(dossierID,formattedRdv[0]);
       console.log('addedRdv', addedRdv); // Ajoutez ce log pour déboguer
       // Mise à jour du state avec le rendez-vous ajouté
       setRdvs([...rdvs, formattedRdv[0]]);

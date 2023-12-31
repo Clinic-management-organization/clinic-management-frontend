@@ -27,6 +27,20 @@ export const getAllRendezVous = async () => {
         return { success: false, message: error.message };
     }
 };
+
+export const getStatRendezVous = async () => {
+    const endPoint = `api/rendezvous/count-by-month`;
+    const url = Backend_URL + endPoint;
+
+    try {
+        const response = await axios.get(url);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching rendez-vous:", error);
+        return { success: false, message: error.message };
+    }
+}; 
+
 export const deleteRendezVousByID = async (rendezVousID) => {
     const endPoint = `api/rendezvous/delete/${rendezVousID}`;
     const url = Backend_URL + endPoint;
@@ -57,6 +71,31 @@ export const addRendezVous = async (rendezVous) => {
         return { success: false, message: error.message };
     }
 };
+
+export const addRendezVousByDossierId = async (dossierID, rendezVous) => {
+    // Ajoute l'état du rendez-vous à "CONFIRMEE"
+    rendezVous.etatRendezVous = "CONFIRMEE";
+
+    const endPoint = `api/rendezvous/add-to-dossier/${dossierID}`;
+    const url = Backend_URL + endPoint;
+
+    try {
+        const response = await axios.post(
+            url,
+            { ...rendezVous },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error("Error adding rendez-vous:", error);
+        return { success: false, message: error.message };
+    }
+};
+
 export const updateStatusRendezVousByID = async (id, etat) => {
     const endPoint = `api/rendezvous/updateEtat/${id}`;
     const url = Backend_URL + endPoint;

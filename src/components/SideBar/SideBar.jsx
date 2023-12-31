@@ -56,13 +56,13 @@ const SideBar = () => {
                 </li>
               </Link>
 
-
+{/* 
               <Link to="/rendez_vous" className="link">
                 <li className="sidebarListItem">
                   <Person3 className="sidebarIcon" />
                   Rendez-vous
                 </li>
-              </Link>
+              </Link> */}
 
               <Link to="/rendez_vous_list" className="link">
                 <li className="sidebarListItem">

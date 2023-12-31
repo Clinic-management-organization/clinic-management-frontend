@@ -4,7 +4,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { format } from "date-fns";
+import { getAllDossiersMedicaux } from "../../services/DossierMedicalServices";
 import {
   Button,
   Container,
@@ -13,11 +13,11 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
-
-import ListTraitement from "../ListTraitement";
-import ListDiagnostic from "../ListDiagnostic";
+import { format } from "date-fns";
+import ListTraitement from "./ListTraitement";
+import ListDiagnostic from "./ListDiagnostic";
 import { useNavigate } from "react-router-dom";
-import { getAllDossiersMedicaux } from "../../../services/DossierMedicalServices";
+import { getConsultationByDossierID } from "../../services/ConsultationService";
 
 const DossierMedicalList = () => {
   const navigate = useNavigate();
@@ -27,30 +27,26 @@ const DossierMedicalList = () => {
   const [selectedTraitement, setSelectedTraitement] = useState([]);
   const [openDiagnosticModal, setOpenDiagnosticModal] = useState(false);
   const [selectedDiagnostic, setSelectedDiagnostic] = useState([]);
-
-  const handleChange = (panel) => (event, isExpanded) => {
+  const [consultations, setConsultations] = useState([{}]);
+  
+  
+  const handleChange = (panel, id) => async (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
+  
+    try {
+      const consultation = await getConsultationByDossierID(id);
+      setConsultations(consultation);
+    } catch (error) {
+      console.error('Error fetching consultation:', error);
+      // Handle the error appropriately (e.g., show an error message)
+    }
   };
-  const formatDate = (dateString) => {
-    const options = {
-      year: "numeric",
-      month: "numeric",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    };
-
-    const date = new Date(dateString);
-    return date.toLocaleDateString("fr-FR", options);
-  };
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Appel du service pour récupérer la liste des dossiers médicaux
         const dossiersMedicauxData = await getAllDossiersMedicaux();
-        console.log("dossiersMedicauxData", dossiersMedicauxData);
         // Vérifier si dossiersMedicauxData est un tableau
         if (Array.isArray(dossiersMedicauxData)) {
           setDossiersMedicaux(dossiersMedicauxData);
@@ -89,37 +85,21 @@ const DossierMedicalList = () => {
     setOpenDiagnosticModal(false);
     setSelectedDiagnostic([]);
   };
-  const addConsultation = (dossierId) => {
-    console.log(`Éditer le dossier médical avec l'ID : ${dossierId}`);
+  const handleEdit = (dossier) => {
     // Naviguer vers la page d'édition de consultation
-    navigate(`/consultations/add-to-dossier/${dossierId}`);
-  };
-  const addRDV = (dossierId) => {
-    navigate(`/rendez_vous/${dossierId}`);
-  };
+    navigate(`/consultations/add/${dossier?.id}`, { state: { dossierMedical: dossier } });  };
 
   return (
     <Container className="container" component="main" style={{ width: "70%" }}>
       <Typography component="h1" variant="h5" style={{ marginBottom: "10%" }}>
-        Liste Des Dossiers Médicaux
+        Les Dossiers Médicaux
       </Typography>
-      <div className="head">
-        <Button
-          className="btn-grad"
-          variant="contained"
-          onClick={() => {
-            navigate(`add`);
-          }}
-        >
-          Ajouter
-        </Button>
-      </div>
       {Array.isArray(dossiersMedicaux) ? (
         dossiersMedicaux?.map((dossier, index) => (
           <Accordion
             key={index}
             expanded={expanded === `panel${index + 1}`}
-            onChange={handleChange(`panel${index + 1}`)}
+            onChange={handleChange(`panel${index + 1}`,dossier?.id)}
             style={{ marginBottom: "1%" }}
           >
             <AccordionSummary
@@ -131,26 +111,26 @@ const DossierMedicalList = () => {
                 Dossier Médical {index + 1}
               </Typography>
               <Typography sx={{ color: "text.secondary" }}>
-                Crée Le {formatDate(dossier.dateCreation)}
+                {dossier?.dateCreation}
               </Typography>
             </AccordionSummary>
             <AccordionDetails
               style={{ display: "flex", flexDirection: "column" }}
             >
-              <Typography>{`Observation: ${dossier?.observation}`}</Typography>
               <Typography>
-                {`Modifié Le : ${formatDate(dossier?.dateMiseAJour)}`}
+                {`Date de Mise à Jour: ${dossier?.dateMiseAJour}`}
               </Typography>
+              <Typography>{`Observation: ${dossier?.observation}`}</Typography>
 
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                 Consultations :
               </Typography>
               <List style={{ marginLeft: "5%" }}>
-                {dossier.consultations?.map((consultation) => (
+                {consultations && consultations?.map((consultation) => (
                   <React.Fragment key={consultation.id}>
                     <ListItem>
                       <ListItemText
-                        // primary={`ID: ${consultation.id}`}
+                        primary={`ID: ${consultation.id}`}
                         secondary={
                           <React.Fragment>
                             <Typography
@@ -195,19 +175,12 @@ const DossierMedicalList = () => {
                 handleClose={handleCloseTraitementModal}
                 traitements={selectedTraitement}
               />
-              {/* Bouton Edit en bas à droite */}
-              <Button
-                className="btn-g"
-                onClick={() => addConsultation(dossier?.id)}
+               {/* Bouton Edit en bas à droite */}
+               <Button
+                onClick={() => handleEdit(dossier)}
                 variant="contained"
                 color="primary"
                 style={{ marginTop: "auto", alignSelf: "flex-end" }}
-                sx={{
-                  mt: 3,
-                  mb: 2,
-                  bgcolor: "rgb(100,149,237)",
-                  "&:hover": { backgroundColor: "hsl(18, 100%, 66%)" },
-                }}
               >
                 Ajouter Consultation
               </Button>
@@ -234,7 +207,7 @@ const DossierMedicalList = () => {
                               color="textPrimary"
                             >
                               {" "}
-                              {`État: ${rdv?.etatRendezVous}`}
+                              {`État: ${rdv.etatRendezVous}`}
                             </Typography>
                             <Typography
                               style={{ marginLeft: "3%" }}
@@ -259,21 +232,8 @@ const DossierMedicalList = () => {
                   </React.Fragment>
                 ))}
               </List>
-              <Button
-                className="btn-g"
-                onClick={() => addRDV(dossier?.id)}
-                variant="contained"
-                color="primary"
-                sx={{
-                  mt: 3,
-                  mb: 2,
-                  bgcolor: "rgb(100,149,237)",
-                  "&:hover": { backgroundColor: "hsl(18, 100%, 66%)" },
-                }}
-                style={{ marginTop: "auto", alignSelf: "flex-end" }}
-              >
-                Ajouter Rendez-vous
-              </Button>
+
+             
             </AccordionDetails>
           </Accordion>
         ))

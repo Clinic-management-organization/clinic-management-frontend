@@ -15,6 +15,32 @@ export const getAllConsultation = async () => {
         return { success: false, message: error.message };
     }
 };
+export const getStatConsultation = async () => {
+    const endPoint = `api/consultations/income/year`;
+    const url = Backend_URL + endPoint;
+
+    try {
+        const response = await axios.get(url);
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching consultations:", error);
+        return { success: false, message: error.message };
+    }
+};
+export const getStatTotalConsultation = async () => {
+    const endPoint = `api/consultations/income`;
+    const url = Backend_URL + endPoint;
+
+    try {
+        const response = await axios.get(url);
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching consultations:", error);
+        return { success: false, message: error.message };
+    }
+};
 
 export const deleteConsultation = async (dossierMedicalID) => {
     const endPoint = `api/consultations/delete/${dossierMedicalID}`;
