@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import MedecinHoraires from "./MedecinHoraires";
 import './index.css'
 import { addMedecin } from "../../../services/MedecinServices";
+import { register } from "../../../services/AuthenticationService";
 // Ajoutez vos styles CSS personnalisés ici si nécessaire
 const theme = {};
 
@@ -32,7 +33,7 @@ const MedecinAdd = () => {
     adresse: "",
     tel: "",
     email: "",
-    specialite: "",
+    specialite: "DERMATOLOGIE",
     horaires: [],
   });
   const specialites = ["DERMATOLOGIE", , "GYNECOLOGIE", "OPHTALMOLOGIE"];
@@ -52,6 +53,13 @@ const MedecinAdd = () => {
 
     console.log("data", _formData);
     addMedecin(_formData).then(() => {
+      const user={
+        username : formData.email,
+        password:formData.tel,
+        medecin:_formData
+
+      }
+      register(user).then((res)=>console.log(res));
       navigate("/medecins");
     });
   };

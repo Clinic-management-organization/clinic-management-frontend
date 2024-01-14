@@ -74,6 +74,7 @@ const MedecinUpdate = () => {
           specialite: selectedSpecialite,
         };
         updateMedecinByID(medecin.id, data).then(() => {
+          toast.success("Mise à jour est effectuée avec succès");
           navigate("/medecins");
         });
       } catch (e) {

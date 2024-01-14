@@ -7,7 +7,7 @@ export const theme = createTheme({
             light: "rgb(131,58,180)"
         },
         secondary: {
-            main: 'rgb(131,58,180)',
+            main: 'rgb(100,149,237)',
         },
         otherColor: {
             main: "#999"

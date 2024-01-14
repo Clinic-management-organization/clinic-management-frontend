@@ -10,7 +10,7 @@ import {
   Legend,
   ArcElement // Import ArcElement
 } from 'chart.js';
-import { getStatConsultation, getStatTotalConsultation, getRendezVousCountByMonth } from '../../services/ConsultationService';
+import { getStatConsultation, getStatTotalConsultation, } from '../../services/ConsultationService';
 import { getStatRendezVous } from '../../services/RendezVousServices';
 
 // Registering the necessary components for Chart.js
@@ -63,7 +63,9 @@ const MonthlyIncomeChart = () => {
         }
 
         const total = await getStatTotalConsultation();
+      
         setTotalPrice(total);
+        console.log(totalPrice);
 
         const rendezvousCount = await getStatRendezVous();
         if (rendezvousCount && Array.isArray(rendezvousCount)) {
@@ -151,7 +153,7 @@ const MonthlyIncomeChart = () => {
         }} 
       />
       <div style={{ marginTop: '20px' ,width:'50%'}}>
-        <h3>Total Price: {totalPrice.toFixed(2)}</h3>
+        <h3>Total Price: {totalPrice?.toFixed(2)}</h3>
         <Doughnut data={doughnutData} />
       </div>
       <div style={{ marginTop: '20px' ,width:'100%'}}>

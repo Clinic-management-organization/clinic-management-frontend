@@ -9,7 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
   import "./index.css";
 
   import React, { useEffect, useState } from 'react';
-import { Toaster } from "react-hot-toast";
+import { Toaster ,toast} from "react-hot-toast";
 import { getPatientByID, updatePatientByID } from "../../../services/PatientsServices";
 
 
@@ -58,6 +58,7 @@ import { getPatientByID, updatePatientByID } from "../../../services/PatientsSer
 
       console.log("data", data);
       updatePatientByID(patient.id, data).then(()=>{
+        toast.success("Mise à jour est effectuée avec succès");
         navigate('/patients')
       })
 

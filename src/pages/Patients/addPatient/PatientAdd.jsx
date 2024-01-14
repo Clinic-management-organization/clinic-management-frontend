@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { ThemeProvider } from "@mui/system";
 import { PersonAddAlt1 as PersonAddAlt1Icon } from "@mui/icons-material";
-import { Toaster } from "react-hot-toast";
+import { Toaster,toast  } from "react-hot-toast";
 import { addPatient } from "../../../services/PatientsServices";
 import './index.css'
 // Ajoutez vos styles CSS personnalisés ici si nécessaire
@@ -45,6 +45,7 @@ const PatientAdd = () => {
     const info = new FormData(e.currentTarget);
     console.log("data", formData);
     addPatient(formData).then(() => {
+      toast.success("Le patient est ajouté avec succès");
       navigate("/patients");
     });
   };
