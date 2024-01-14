@@ -16,34 +16,43 @@ import ConsultationAdd from './pages/Consultation/ConsultationAdd';
 import DossierMedicalAdd from './pages/DossierMedical/addDossierMedical/DossierMedicalAdd';
 import DossierMedicalList from './pages/DossierMedical/ListDossierMedical/DossierMedicalList';
 import MonthlyIncomeChart from './pages/stat/MonthlyIncomeChart';
+import SignInSide from './pages/SignIn/SignIn';
 
 
 function App() {
-
+  const test = true;
   return (
     <div>
-      <Router>
-        <Navbar />
-        <div className="container">
-          <SideBar />
-          <Routes>
-            <Route path="/patients" element={<PatientsList />} />
-            <Route path="/patients/add" element={<PatientAdd />} />
-            <Route path="/patients/update/:id" element={<PatientUpdate/>} />
-            <Route path="/medecins" element={<MedecinsList />} />
-            <Route path="/medecins/add" element={<MedecinAdd />} />
-            <Route path="/medecins/update/:id" element={<MedecinUpdate/>} />
-            <Route path="/rendez_vous/:dossierID" element={<RendezVousList/>} />
-            <Route path="/rendez_vous_list" element={<UpdateStatusRendezVous/>} />
-            <Route path="/dossiersMedicaux" element={<DossierMedicalList/>} />
-            <Route path="/dossiersMedicaux/add" element={<DossierMedicalAdd/>} />
-            <Route path="/consultations/add-to-dossier/:dossierID" element={<ConsultationAdd/>} />
-            <Route path="/" element={<MonthlyIncomeChart/>} />
+      {test ? (
+        <Router>
+          <Navbar />
+          <div className="container">
+            <SideBar />
+            <Routes>
+
+              <Route path="/patients" element={<PatientsList />} />
+              <Route path="/patients/add" element={<PatientAdd />} />
+              <Route path="/patients/update/:id" element={<PatientUpdate />} />
+              <Route path="/medecins" element={<MedecinsList />} />
+              <Route path="/medecins/add" element={<MedecinAdd />} />
+              <Route path="/medecins/update/:id" element={<MedecinUpdate />} />
+              <Route path="/rendez_vous/:dossierID" element={<RendezVousList />} />
+              <Route path="/rendez_vous_list" element={<UpdateStatusRendezVous />} />
+              <Route path="/dossiersMedicaux" element={<DossierMedicalList />} />
+              <Route path="/dossiersMedicaux/add" element={<DossierMedicalAdd />} />
+              <Route path="/consultations/add-to-dossier/:dossierID" element={<ConsultationAdd />} />
+              <Route path="/" element={<MonthlyIncomeChart />} />
+              <Route path="/statistics" element={<MonthlyIncomeChart />} />
 
 
+
+            </Routes>
+          </div>
+        </Router>) : (<Router> <Routes><Route path="/login" element={<SignInSide />} />
         </Routes>
-        </div>
-      </Router>
+        </Router>)
+
+      }
     </div>
 
 
