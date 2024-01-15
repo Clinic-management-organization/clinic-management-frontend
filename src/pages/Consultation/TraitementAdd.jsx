@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { ThemeProvider } from "@mui/system";
 import { PersonAddAlt1 as PersonAddAlt1Icon } from "@mui/icons-material";
-import { Toaster } from "react-hot-toast";
+import { Toaster,toast } from "react-hot-toast";
 import { addTraitement } from "../../services/ConsultationService";
 
 const theme = {};
@@ -38,6 +38,7 @@ const TraitementAdd = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     addTraitement(formData).then(() => {
+      toast.success("Le traitement a été ajouté avec succès");
       navigate("/traitement");
     });
   };

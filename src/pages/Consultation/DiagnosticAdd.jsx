@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { ThemeProvider } from "@mui/system";
 import { Healing as HealingIcon } from "@mui/icons-material";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { addDiagnostic } from "../../services/ConsultationService";
 
 
@@ -39,6 +39,7 @@ const DiagnosticAdd = (consultation) => {
     const handleSubmit = (e) => {
       e.preventDefault();
       addDiagnostic(formData).then(() => {
+        toast.success("Diagnoctic est ajouté avec succès !")
         //navigate('/diagnostics');
       });
     };

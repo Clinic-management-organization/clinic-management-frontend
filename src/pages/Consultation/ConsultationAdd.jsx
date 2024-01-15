@@ -15,7 +15,7 @@ import {
   Article,
   PersonAddAlt1 as PersonAddAlt1Icon,
 } from "@mui/icons-material";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { addConsultation } from "../../services/ConsultationService";
 
 const theme = {};
@@ -104,6 +104,7 @@ const ConsultationAdd = () => {
     };
 
     addConsultation(dossierID, newFormData).then(() => {
+      toast.success("Consultation est ajoutée avec succès !")
       navigate("/dossiersMedicaux");
     });
   };
