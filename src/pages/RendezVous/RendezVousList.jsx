@@ -11,6 +11,7 @@ const RendezVousList = () => {
   const [medecins, setMedecins] = useState([]);
   const [selectedSpecialite, setSelectedSpecialite] = useState("");
   const [selectedMedecin, setSelectedMedecin] = useState(null);
+  const user = JSON.parse(localStorage.getItem("user"))?.user;
 
   const [rdvs, setRdvs] = useState([]);
 
@@ -33,6 +34,7 @@ const RendezVousList = () => {
         // Appel à votre API pour récupérer les rendez-vous
         if (selectedMedecin) {
           const res = await getRendezVousByMedecinID(selectedMedecin.id);
+          // getRendezVousByPatientID
           // Mettre à jour le state avec les données formatées
           setRdvs(formattedRdvsToData(res));
           console.log("hani lenaaa", selectedMedecin);

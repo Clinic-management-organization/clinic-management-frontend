@@ -17,7 +17,7 @@ import {
 import ListTraitement from "../ListTraitement";
 import ListDiagnostic from "../ListDiagnostic";
 import { useNavigate } from "react-router-dom";
-import { getAllDossiersMedicaux } from "../../../services/DossierMedicalServices";
+import { getAllDossiersMedicaux, getDossierMedicalByPatientID } from "../../../services/DossierMedicalServices";
 
 const DossierMedicalList = () => {
   const navigate = useNavigate();
@@ -27,6 +27,7 @@ const DossierMedicalList = () => {
   const [selectedTraitement, setSelectedTraitement] = useState([]);
   const [openDiagnosticModal, setOpenDiagnosticModal] = useState(false);
   const [selectedDiagnostic, setSelectedDiagnostic] = useState([]);
+  const user = JSON.parse(localStorage.getItem("user"))?.user;
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -49,10 +50,20 @@ const DossierMedicalList = () => {
     const fetchData = async () => {
       try {
         // Appel du service pour récupérer la liste des dossiers médicaux
-        const dossiersMedicauxData = await getAllDossiersMedicaux();
+        let dossiersMedicauxData;
+        if(user?.authorities[0]?.authority=="USER")
+        {
+           dossiersMedicauxData = await getDossierMedicalByPatientID(user?.patient?.id);
+
+        }
+        else {
+           dossiersMedicauxData = await getAllDossiersMedicaux();
+        }
         console.log("dossiersMedicauxData", dossiersMedicauxData);
         // Vérifier si dossiersMedicauxData est un tableau
         if (Array.isArray(dossiersMedicauxData)) {
+         
+          //user?.patient?.id
           setDossiersMedicaux(dossiersMedicauxData);
         } else {
           console.error(
@@ -103,7 +114,10 @@ const DossierMedicalList = () => {
       <Typography component="h1" variant="h5" style={{ marginBottom: "10%" }}>
         Liste Des Dossiers Médicaux
       </Typography>
-      <div className="head">
+
+      {
+        user?.authorities[0]?.authority=="ADMIN" &&
+        <div className="head">
         <Button
           className="btn-grad"
           variant="contained"
@@ -114,6 +128,8 @@ const DossierMedicalList = () => {
           Ajouter
         </Button>
       </div>
+      }
+     
       {Array.isArray(dossiersMedicaux) ? (
         dossiersMedicaux?.map((dossier, index) => (
           <Accordion
@@ -196,6 +212,8 @@ const DossierMedicalList = () => {
                 traitements={selectedTraitement}
               />
               {/* Bouton Edit en bas à droite */}
+              {
+        user?.authorities[0]?.authority=="ADMIN" &&
               <Button
                 className="btn-g"
                 onClick={() => addConsultation(dossier?.id)}
@@ -211,7 +229,7 @@ const DossierMedicalList = () => {
               >
                 Ajouter Consultation
               </Button>
-
+}
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                 Rendez-vous :
               </Typography>
@@ -259,6 +277,8 @@ const DossierMedicalList = () => {
                   </React.Fragment>
                 ))}
               </List>
+
+              {user?.authorities[0]?.authority=="ADMIN" &&
               <Button
                 className="btn-g"
                 onClick={() => addRDV(dossier?.id)}
@@ -274,6 +294,8 @@ const DossierMedicalList = () => {
               >
                 Ajouter Rendez-vous
               </Button>
+
+              }
             </AccordionDetails>
           </Accordion>
         ))

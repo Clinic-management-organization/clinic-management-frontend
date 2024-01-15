@@ -8,6 +8,7 @@ import {
   getRendezVousByMedecinID,
   updateStatusRendezVousByID,
   searchRendezVous,
+  getRendezVousByPatientID,
 } from "../../services/RendezVousServices";
 
 const UpdateStatusRendezVous = () => {
@@ -15,14 +16,25 @@ const UpdateStatusRendezVous = () => {
   const [searchParams, setSearchParams] = useState({
     etatRendezVous: null,
     dateRendezVous: null,
+    patient : null
   });
+  const user = JSON.parse(localStorage.getItem("user"))?.user;
 
   useEffect(() => {
     fetchData();
   }, [searchParams]);
 
   const fetchData = async () => {
-    const res = await searchRendezVous(searchParams);
+    let res ;
+    if(user?.authorities[0]?.authority=="USER")
+    {
+      res = await getRendezVousByPatientID(user?.patient?.id);
+
+    }
+    else {
+      res = await searchRendezVous(searchParams);
+    }
+ 
 	console.log("res", res)
     setData(res);
   };
@@ -80,11 +92,29 @@ const UpdateStatusRendezVous = () => {
     },
   ];
 
+  const columnsP = [
+    {
+      field: "dateRendezVous",
+      headerName: "Date du rendez-vous",
+      width: 200,
+      valueFormatter: (params) => {
+        const date = new Date(params.value);
+        const formattedDate = date.toLocaleDateString("fr-FR");
+        return formattedDate;
+      },
+    },
+    { field: "remarques", headerName: "Remarques", width: 250 },
+    { field: "motif", headerName: "Motif", width: 100 },
+    { field: "etatRendezVous", headerName: "État du rendez-vous", width: 150 },
+ 
+  ];
   return (
     <div className="rendezVousList" style={{ marginLeft: "5%", marginTop: "2%" }}>
       <Typography component="h1" variant="h5" style={{ marginBottom: "3%" }}>
-        Modification de status des Rendez-Vous
+      {user?.authorities[0]?.authority=="ADMIN" ? "Modification de status des Rendez-Vous" :"Liste rendez-vous" }
       </Typography>
+     
+    { user?.authorities[0]?.authority=="ADMIN" &&
       <div>
         <FormControl sx={{width: '30%', mr: 5}}>
           <InputLabel htmlFor="etatRendezVous">État du Rendez-Vous</InputLabel>
@@ -98,17 +128,19 @@ const UpdateStatusRendezVous = () => {
             <MenuItem value="ANNULEE">Annulée</MenuItem>
           </Select>
         </FormControl>
+
         <TextField
           type="date"
           name="dateRendezVous"
           value={searchParams.dateRendezVous || ""}
           onChange={handleChange}
         />
-      </div>
+
+      </div> }
       <DataGrid
         rows={data}
         disableSelectionOnClick
-        columns={columns}
+        columns= { user?.authorities[0]?.authority=="ADMIN" ?columns :columnsP}
         pageSize={8}
         checkboxSelection
       />

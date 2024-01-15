@@ -68,3 +68,17 @@ export const getDossierMedicalByID = async (dossierMedicalID) => {
         return { success: false, message: error.message };
     }
 };
+
+
+export const getDossierMedicalByPatientID = async (patientID) => {
+    const endPoint = `api/dossiersMedicaux/patient/${patientID}`;
+    const url = Backend_URL + endPoint;
+
+    try {
+        const response = await axiosInstance.get(url);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching dossier medical:", error);
+        return { success: false, message: error.message };
+    }
+};
