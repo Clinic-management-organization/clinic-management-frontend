@@ -2,6 +2,7 @@ import axiosInstance from "./axiosInstance";
 
 const Backend_URL = "http://127.0.0.1:8080/";
 
+
 export const getAllConsultation = async () => {
     const endPoint = `api/consultations`;
     const url = Backend_URL + endPoint;

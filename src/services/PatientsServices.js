@@ -2,88 +2,85 @@ import axiosInstance from "./axiosInstance";
 
 const Backend_URL = "http://127.0.0.1:8080/";
 
+const parseJwt = (token) => {
+    try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = JSON.parse(window.atob(base64));
+        return jsonPayload;
+    } catch (error) {
+        console.error("Error parsing JWT:", error);
+        return null;
+    }
+};
+
+const getRolesFromToken = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        const decodedToken = parseJwt(token);
+        return decodedToken.roles || [];
+    }
+    return [];
+};
+
+const checkUserRole = (allowedRoles, userRoles) => {
+    return allowedRoles.some(role => userRoles.includes(role));
+};
+
+const makeAuthorizedRequest = async (endpoint, method, data = null, headers = {}) => {
+    try {
+        const userRoles = getRolesFromToken();
+        if (checkUserRole(headers.allowedRoles, userRoles)) {
+            const url = Backend_URL + endpoint;
+            const response = await axiosInstance({ method, url, data, headers });
+            return response.data;
+        } else {
+            return { success: false, message: "Permission denied" };
+        }
+    } catch (error) {
+        console.error(`Error making ${method} request to ${endpoint}:`, error);
+        return { success: false, message: error.message };
+    }
+};
+
 export const searchPatients = async (searchCriteria) => {
-  const endPoint = `api/patients/search`;
-  const url = Backend_URL + endPoint;
-
-  const response = await axiosInstance
-    .get(url, { params: searchCriteria })
-    .then((res) => {
-      console.log("searchPatients from Backend:", res.data);
-      return res.data;
-    })
-    .catch((err) => {
-      console.log("searchPatients error:", err);
-      return { success: false, status: "res.status", message: err };
-    });
-
-  return response;
+    const endpoint = `api/patients/search`;
+    const method = 'get';
+    const allowedRoles = ['USER', 'ADMIN'];
+    return makeAuthorizedRequest(endpoint, method, null, { allowedRoles, params: searchCriteria });
 };
 
 export const getAllPatients = async () => {
-    const endPoint = `api/patients`;
-    const url = Backend_URL + endPoint;
-    const response = await axiosInstance
-      .get(url)
-      .then((res) => {
-        return  res.data ;
-      })
-      .catch((err) => {
-        console.log("login err auth :", err);
-        return { success: false, status: "res.status", message: err };
-      });
-    return response;
-  };
+    const endpoint = `api/patients`;
+    const method = 'get';
+    const allowedRoles = ['USER', 'ADMIN'];
+    return makeAuthorizedRequest(endpoint, method, null, { allowedRoles });
+};
 
 export const deletePatientByID = async (patientID) => {
-    const endPoint = `api/patients/delete/${patientID}`;
-    const url = Backend_URL + endPoint;
-
-    try {
-        const response = await axiosInstance.delete(url);
-        return response.data;
-    } catch (error) {
-        console.error("Error deleting patient:", error);
-        return { success: false, message: error.message };
-    }
+    const endpoint = `api/patients/delete/${patientID}`;
+    const method = 'delete';
+    const allowedRoles = ['ADMIN'];
+    return makeAuthorizedRequest(endpoint, method, null, { allowedRoles });
 };
 
 export const addPatient = async (patient) => {
-    const endPoint = `api/patients`;
-    const url = Backend_URL + endPoint;
-
-    try {
-        const response = await axiosInstance.post(url, { ...patient });
-        return response.data;
-    } catch (error) {
-        console.error("Error adding patient:", error);
-        return { success: false, message: error.message };
-    }
+    const endpoint = `api/patients`;
+    const method = 'post';
+    const allowedRoles = ['ADMIN'];
+    return makeAuthorizedRequest(endpoint, method, { ...patient }, { allowedRoles });
 };
 
 export const updatePatientByID = async (patientID, patientInfo) => {
-    const endPoint = `api/patients/update/${patientID}`;
-    const url = Backend_URL + endPoint;
-
-    try {
-        const response = await axiosInstance.put(url, { ...patientInfo });
-        console.log(response.data); // Log de la réponse
-        return response.data;
-    } catch (error) {
-        console.error("Error updating patient:", error);
-        return { success: false, message: error.message };
-    }
+    const endpoint = `api/patients/update/${patientID}`;
+    const method = 'put';
+    const allowedRoles = ['ADMIN'];
+    return makeAuthorizedRequest(endpoint, method, { ...patientInfo }, { allowedRoles });
 };
 
 export const getPatientByID = async (patientID) => {
-    const endPoint = `api/patients/${patientID}`;
-    const url = Backend_URL + endPoint;
-
-    try {
-        const response = await axiosInstance.get(url);
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching patient:", error);
-        return { success: false, message: error.message };
-    }
+    const endpoint = `api/patients/${patientID}`;
+    const method = 'get';
+    const allowedRoles = ['USER', 'ADMIN'];
+    return makeAuthorizedRequest(endpoint, method, null, { allowedRoles });
 };
