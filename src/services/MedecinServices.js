@@ -1,14 +1,14 @@
-import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
 const Backend_URL = "http://127.0.0.1:8080/";
 
 export const getAllMedecins = async () => {
     const endPoint = `api/medecins`;
     const url = Backend_URL + endPoint;
-    const response = await axios
+    const response = await axiosInstance
       .get(url)
       .then((res) => {
-        
+
         return  res.data ;
       })
       .catch((err) => {
@@ -23,7 +23,7 @@ export const deleteMedecinByID = async (medecinID) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.delete(url);
+        const response = await axiosInstance.delete(url);
         return response.data;
     } catch (error) {
         console.error("Error deleting medecin:", error);
@@ -36,7 +36,7 @@ export const addMedecin = async (medecin) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.post(url, { ...medecin });
+        const response = await axiosInstance.post(url, { ...medecin });
         return response.data;
     } catch (error) {
         console.error("Error adding medecin:", error);
@@ -49,7 +49,7 @@ export const updateMedecinByID = async (medecinID, medecinInfo) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.put(url, { ...medecinInfo });
+        const response = await axiosInstance.put(url, { ...medecinInfo });
         return response.data;
     } catch (error) {
         console.error("Error updating medecin:", error);
@@ -62,7 +62,7 @@ export const getMedecinByID = async (medecinID) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.get(url);
+        const response = await axiosInstance.get(url);
         return response.data;
     } catch (error) {
         console.error("Error fetching medecin:", error);

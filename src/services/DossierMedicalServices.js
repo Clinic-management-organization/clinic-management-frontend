@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
 const Backend_URL = "http://127.0.0.1:8080/";
 
@@ -7,7 +7,7 @@ export const getAllDossiersMedicaux = async () => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.get(url);
+        const response = await axiosInstance.get(url);
         console.log(response);
         return response.data;
     } catch (error) {
@@ -21,7 +21,7 @@ export const deleteDossierMedicalByID = async (dossierMedicalID) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.delete(url);
+        const response = await axiosInstance.delete(url);
         return response.data;
     } catch (error) {
         console.error("Error deleting dossier medical:", error);
@@ -34,7 +34,7 @@ export const addDossierMedical = async (dossierMedical) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.post(url, JSON.stringify({ ...dossierMedical }), { headers: { 'Content-Type': 'application/json' } });
+        const response = await axiosInstance.post(url, JSON.stringify({ ...dossierMedical }), { headers: { 'Content-Type': 'application/json' } });
         console.log(response.data);
         return response.data;
     } catch (error) {
@@ -48,7 +48,7 @@ export const updateDossierMedicalByID = async (dossierMedicalID, dossierMedicalI
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.put(url, { ...dossierMedicalInfo });
+        const response = await axiosInstance.put(url, { ...dossierMedicalInfo });
         return response.data;
     } catch (error) {
         console.error("Error updating dossier medical:", error);
@@ -61,11 +61,10 @@ export const getDossierMedicalByID = async (dossierMedicalID) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.get(url);
+        const response = await axiosInstance.get(url);
         return response.data;
     } catch (error) {
         console.error("Error fetching dossier medical:", error);
         return { success: false, message: error.message };
     }
 };
-

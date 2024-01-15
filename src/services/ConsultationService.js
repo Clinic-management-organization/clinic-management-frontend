@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
 const Backend_URL = "http://127.0.0.1:8080/";
 
@@ -7,7 +7,7 @@ export const getAllConsultation = async () => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.get(url);
+        const response = await axiosInstance.get(url);
         console.log(response);
         return response.data;
     } catch (error) {
@@ -20,7 +20,7 @@ export const getStatConsultation = async () => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.get(url);
+        const response = await axiosInstance.get(url);
         console.log(response);
         return response.data;
     } catch (error) {
@@ -33,7 +33,7 @@ export const getStatTotalConsultation = async () => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.get(url);
+        const response = await axiosInstance.get(url);
         console.log(response);
         return response.data;
     } catch (error) {
@@ -47,7 +47,7 @@ export const deleteConsultation = async (dossierMedicalID) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.delete(url);
+        const response = await axiosInstance.delete(url);
         return response.data;
     } catch (error) {
         console.error("Error deleting consultation:", error);
@@ -60,7 +60,7 @@ export const addConsultation = async (dossierID, consultation) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.post(url, consultation, {
+        const response = await axiosInstance.post(url, consultation, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -80,7 +80,7 @@ export const updateConsultationByID = async (consultationID, consultationInfo) =
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.put(url, { ...consultationInfo });
+        const response = await axiosInstance.put(url, { ...consultationInfo });
         return response.data;
     } catch (error) {
         console.error("Error updating consultations:", error);
@@ -93,7 +93,7 @@ export const getConsultationByID = async (consultationID) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.get(url);
+        const response = await axiosInstance.get(url);
         return response.data;
     } catch (error) {
         console.error("Error fetching consultation", error);
@@ -105,7 +105,7 @@ export const addTraitement = async (traitement) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.post(url, { ...traitement });
+        const response = await axiosInstance.post(url, { ...traitement });
         return response.data;
     } catch (error) {
         console.error("Error adding Traitement:", error);
@@ -117,7 +117,7 @@ export const addDiagnostic = async (diagnostic) => {
     const url = Backend_URL + endPoint;
     console.log(diagnostic)
     try {
-        const response = await axios.post(url, { ...diagnostic });
+        const response = await axiosInstance.post(url, { ...diagnostic });
         return response.data;
     } catch (error) {
         console.error("Error adding diagnostic:", error);

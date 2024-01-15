@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
 const Backend_URL = "http://127.0.0.1:8080/";
 
@@ -6,7 +6,7 @@ export const searchPatients = async (searchCriteria) => {
   const endPoint = `api/patients/search`;
   const url = Backend_URL + endPoint;
 
-  const response = await axios
+  const response = await axiosInstance
     .get(url, { params: searchCriteria })
     .then((res) => {
       console.log("searchPatients from Backend:", res.data);
@@ -23,15 +23,13 @@ export const searchPatients = async (searchCriteria) => {
 export const getAllPatients = async () => {
     const endPoint = `api/patients`;
     const url = Backend_URL + endPoint;
-    console.log('aaa33333333',url)
-    const response = await axios
+    const response = await axiosInstance
       .get(url)
       .then((res) => {
-
         return  res.data ;
       })
       .catch((err) => {
-        console.log("login err auth :", err);
+        console.log("patients all error :", err);
         return { success: false, status: "res.status", message: err };
       });
     return response;
@@ -42,7 +40,7 @@ export const deletePatientByID = async (patientID) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.delete(url);
+        const response = await axiosInstance.delete(url);
         return response.data;
     } catch (error) {
         console.error("Error deleting patient:", error);
@@ -55,7 +53,7 @@ export const addPatient = async (patient) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.post(url, { ...patient });
+        const response = await axiosInstance.post(url, { ...patient });
         return response.data;
     } catch (error) {
         console.error("Error adding patient:", error);
@@ -68,7 +66,7 @@ export const updatePatientByID = async (patientID, patientInfo) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.put(url, { ...patientInfo });
+        const response = await axiosInstance.put(url, { ...patientInfo });
         console.log(response.data); // Log de la réponse
         return response.data;
     } catch (error) {
@@ -82,7 +80,7 @@ export const getPatientByID = async (patientID) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.get(url);
+        const response = await axiosInstance.get(url);
         return response.data;
     } catch (error) {
         console.error("Error fetching patient:", error);

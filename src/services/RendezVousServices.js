@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
 const Backend_URL = "http://127.0.0.1:8080/";
 
@@ -7,7 +7,7 @@ export const searchRendezVous = async (searchParams) => {
   const url = Backend_URL + endPoint;
 
   try {
-    const response = await axios.get(url, { params: searchParams });
+    const response = await axiosInstance.get(url, { params: searchParams });
     return response.data;
   } catch (error) {
     console.error("Error fetching rendez-vous:", error);
@@ -20,7 +20,7 @@ export const getAllRendezVous = async () => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.get(url);
+        const response = await axiosInstance.get(url);
         return response.data;
     } catch (error) {
         console.error("Error fetching rendez-vous:", error);
@@ -33,20 +33,20 @@ export const getStatRendezVous = async () => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.get(url);
+        const response = await axiosInstance.get(url);
         return response.data;
     } catch (error) {
         console.error("Error fetching rendez-vous:", error);
         return { success: false, message: error.message };
     }
-}; 
+};
 
 export const deleteRendezVousByID = async (rendezVousID) => {
     const endPoint = `api/rendezvous/delete/${rendezVousID}`;
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.delete(url);
+        const response = await axiosInstance.delete(url);
         return response.data;
     } catch (error) {
         console.error("Error deleting rendez-vous:", error);
@@ -59,7 +59,7 @@ export const addRendezVous = async (rendezVous) => {
     console.log("rendezVous",rendezVous)
 
     try {
-        const response = await axios.post(url, {...rendezVous} ,
+        const response = await axiosInstance.post(url, {...rendezVous} ,
           {headers: {
             'Content-Type': 'application/json',
           },
@@ -80,7 +80,7 @@ export const addRendezVousByDossierId = async (dossierID, rendezVous) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.post(
+        const response = await axiosInstance.post(
             url,
             { ...rendezVous },
             {
@@ -101,7 +101,7 @@ export const updateStatusRendezVousByID = async (id, etat) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.put (url, etat
+        const response = await axiosInstance.put (url, etat
             ,{headers: {
                 'Content-Type': 'application/json',
               },})
@@ -118,7 +118,7 @@ export const updateRendezVousByID = async (id, rendezVous) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.put(url, { ...rendezVous });
+        const response = await axiosInstance.put(url, { ...rendezVous });
         console.log(response.data); // Log de la réponse
         return response.data;
     } catch (error) {
@@ -131,7 +131,7 @@ export const getRendezVousByID = async (rendezVousID) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.get(url);
+        const response = await axiosInstance.get(url);
         return response.data;
     } catch (error) {
         console.error("Error fetching rendez-vous:", error);
@@ -143,7 +143,7 @@ export const getRendezVousByMedecinID = async (medecinId) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.get(url);
+        const response = await axiosInstance.get(url);
         return response.data;
     } catch (error) {
         console.error("Error fetching rendez-vous:", error);
@@ -155,7 +155,7 @@ export const getRendezVousByPatientID = async (patientId) => {
     const url = Backend_URL + endPoint;
 
     try {
-        const response = await axios.get(url);
+        const response = await axiosInstance.get(url);
         return response.data;
     } catch (error) {
         console.error("Error fetching rendez-vous:", error);

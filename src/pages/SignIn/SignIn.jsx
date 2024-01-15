@@ -55,7 +55,7 @@ export default function SignInSide() {
       const res = await login(_data);
 
       console.log("res", res);
-      if (!res.user) toast.error("Login ou Mot de passe invalide");
+      if (!res?.user) toast.error("Login ou Mot de passe invalide");
       else if (res.jwt.length > 0) {
         localStorage.setItem("user", JSON.stringify({ ...res }));
         localStorage.setItem("token", res.jwt);
