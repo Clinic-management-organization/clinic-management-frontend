@@ -3,7 +3,7 @@ import axios from 'axios';
 const axiosInstance = axios.create({
   headers: {
     common: {
-      Authorization: `${localStorage.getItem('token')}`,
+      'Content-Type': 'application/json',
     },
   },
 });
