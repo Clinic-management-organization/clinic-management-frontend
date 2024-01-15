@@ -1,11 +1,13 @@
 import axios from 'axios';
 
+// -- Axios
+
 const axiosInstance = axios.create({
   headers: {
-    common: {
-      Authorization: `${localStorage.getItem('token')}`,
-    },
-  },
-});
+    'Authorization': `Bearer ${localStorage.getItem("token")}`,
+    'Content-Type': 'application/json',
+  }
+})
+
 
 export default axiosInstance;

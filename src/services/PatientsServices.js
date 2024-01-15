@@ -29,7 +29,7 @@ export const getAllPatients = async () => {
         return  res.data ;
       })
       .catch((err) => {
-        console.log("patients all error :", err);
+        console.log("login err auth :", err);
         return { success: false, status: "res.status", message: err };
       });
     return response;
