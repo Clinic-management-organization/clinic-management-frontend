@@ -1,4 +1,4 @@
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 
 import Navbar from './components/NavBar/NavBar';
@@ -20,16 +20,16 @@ import SignInSide from './pages/SignIn/SignIn';
 
 
 function App() {
-  const test = true;
+  const user = JSON.parse(localStorage.getItem("user"));
+
   return (
     <div>
-      {test ? (
+      {user?.jwt ? (
         <Router>
           <Navbar />
           <div className="container">
             <SideBar />
             <Routes>
-
               <Route path="/patients" element={<PatientsList />} />
               <Route path="/patients/add" element={<PatientAdd />} />
               <Route path="/patients/update/:id" element={<PatientUpdate />} />
@@ -43,13 +43,17 @@ function App() {
               <Route path="/consultations/add-to-dossier/:dossierID" element={<ConsultationAdd />} />
               <Route path="/" element={<MonthlyIncomeChart />} />
               <Route path="/statistics" element={<MonthlyIncomeChart />} />
-
-
-
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </div>
-        </Router>) : (<Router> <Routes><Route path="/login" element={<SignInSide />} />
-        </Routes>
+        </Router>
+      ) :
+      (
+        <Router>
+          <Routes>
+            <Route path="/login" element={<SignInSide />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
         </Router>)
 
       }

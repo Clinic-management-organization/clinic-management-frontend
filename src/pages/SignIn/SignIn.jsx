@@ -11,6 +11,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
+import toast, { Toaster } from "react-hot-toast";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { login } from "../../services/AuthenticationService";
 import { useNavigate } from "react-router-dom";
@@ -41,6 +42,7 @@ const defaultTheme = createTheme();
 
 export default function SignInSide() {
     const navigate = useNavigate();
+
   const handleSubmit = async(event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -48,13 +50,21 @@ export default function SignInSide() {
       username: data.get("email"),
       password: data.get("password"),
     };
-    const res=await login(_data);
-    console.log(res);
-
-    navigate("/");
-    
-    
-    
+    if (_data?.login == 0 || _data?.password.length == 0) {
+          toast.error("Login ou mot de passe est un format invalide");
+          console.log("res");
+        } else {
+          const res = await login(_data);
+          console.log("res", res);
+          if (! res.user) toast.error("Login ou Mot de passe invalide");
+          else if (res.jwt.length > 0) {
+            localStorage.setItem("user", JSON.stringify({ ...res }));
+            localStorage.setItem("token", res.token);
+            // navigate("/");
+            window.location = "/";
+          } else
+            toast.error("Quelque chose ne va pas, veuillez réessayer plus tard");
+        }
   };
 
   return (
