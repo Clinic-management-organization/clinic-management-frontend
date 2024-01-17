@@ -1,0 +1,48 @@
+.anneeStatusContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .statusimg {
+    width: 50%;
+    height: 600px;
+  }
+  .text1 {
+    font-size: 4rem;
+    text-transform: capitalize;
+    color:blueviolet;
+    text-shadow: 1px 1px 1px rgba(121, 33, 228, 0.336), 2px 2px 1px rgba(121, 33, 228, 0.336);
+    text-align: center;
+  
+  }
+  .text2{
+      text-align: center;
+      color: rgb(146, 166, 186);
+      text-transform: capitalize;
+      padding-top:20px;
+     
+  }
+  .msg{
+      display: inline;
+      width: 40%;
+  }
+  .en_attente{
+      color:hsl(18, 100%, 66%);
+  }
+  #submit {
+    margin-top: 15%;
+    margin-left: 12%;
+    box-sizing: border-box;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 70%;
+    border-radius: 8px;
+    padding: 2.5%;
+    border: none;
+    background: rgb(131,58,180);
+    background: linear-gradient(50deg, rgba(131,58,180,1) 0%, rgba(141,29,253,1) 50%, rgba(252,176,69,1) 100%);
+    color: white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+  

@@ -33,6 +33,7 @@ const UpdateStatusRendezVous = () => {
     }
     else {
       res = await searchRendezVous(searchParams);
+      console.log("rdv " ,   res)
     }
  
 	console.log("res", res)

@@ -17,6 +17,7 @@ import { login } from "../../services/AuthenticationService";
 import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
+
   return (
     <Typography
       variant="body2"
@@ -60,7 +61,11 @@ export default function SignInSide() {
         localStorage.setItem("user", JSON.stringify({ ...res }));
         localStorage.setItem("token", res.jwt);
         // navigate("/");
-        window.location = "/";
+        const user = JSON.parse(localStorage.getItem("user")).user;
+        {user?.authorities[0]?.authority=="ADMIN" ?
+        window.location = "/" :
+        window.location = "/welcome" 
+        }
         toast.success("Login effectué avec succès ! ");
       } else
         toast.error("Quelque chose ne va pas, veuillez réessayer plus tard");
