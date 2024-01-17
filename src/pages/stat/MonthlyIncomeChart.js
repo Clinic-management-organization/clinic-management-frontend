@@ -12,6 +12,7 @@ import {
 } from 'chart.js';
 import { getStatConsultation, getStatTotalConsultation, } from '../../services/ConsultationService';
 import { getStatRendezVous } from '../../services/RendezVousServices';
+import { Container } from '@mui/material';
 
 // Registering the necessary components for Chart.js
 ChartJS.register(
@@ -129,7 +130,7 @@ const MonthlyIncomeChart = () => {
   };
 
   return (
-    <div style={{width:'60%'}}>
+    <Container className="container" component="main" style={{ width: "70%" }}>
       <h2>Charts Overview</h2>
       <div>
         <label htmlFor="yearSelector">Select Year: </label>
@@ -172,7 +173,7 @@ const MonthlyIncomeChart = () => {
           }} 
         />
       </div>
-    </div>
+    </Container>
   );
 };
 
