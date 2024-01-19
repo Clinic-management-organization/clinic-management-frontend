@@ -262,6 +262,20 @@ const DossierMedicalList = () => {
                               new Date(rdv.dateRendezVous),
                               "yyyy-MM-dd"
                             )}`}</Typography>
+							<Typography
+                              style={{ marginLeft: "3%" }}
+                              variant="body2"
+                              color="textPrimary"
+                            >
+                              {`Medecin: ${rdv?.medecin?.nom} ${rdv?.medecin?.prenom}`}
+                            </Typography>
+							<Typography
+                              style={{ marginLeft: "3%" }}
+                              variant="body2"
+                              color="textPrimary"
+                            >
+                              {`Specialité: ${rdv?.medecin?.specialite}`}
+                            </Typography>
                             <Typography
                               style={{ marginLeft: "3%" }}
                               variant="body2"
