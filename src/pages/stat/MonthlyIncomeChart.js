@@ -56,6 +56,7 @@ const MonthlyIncomeChart = () => {
     const fetchData = async () => {
       try {
         const response = await getStatConsultation();
+        console.log("response",response)
         if (response && Array.isArray(response)) {
           setAllData(response);
           filterDataByYear(response, selectedYear);
@@ -63,27 +64,19 @@ const MonthlyIncomeChart = () => {
           console.error("Invalid or missing data format:", response);
         }
 
-        const total = await getStatTotalConsultation();
-      
+        const total = await getStatTotalConsultation();    
         setTotalPrice(total);
         console.log(totalPrice);
 
         const rendezvousCount = await getStatRendezVous();
+        console.log("rendezvousCount",rendezvousCount)
         if (rendezvousCount && Array.isArray(rendezvousCount)) {
-          const labels = rendezvousCount.map(entry => `Month ${entry[0]}`);
-          const values = rendezvousCount.map(entry => entry[1]);
-
-          setRendezvousData({
-            labels: labels,
-            datasets: [{
-              label: 'Rendezvous Count',
-              data: values,
-              backgroundColor: 'rgba(54, 162, 235, 0.2)',
-              borderColor: 'rgba(54, 162, 235, 1)',
-              borderWidth: 1,
-            }]
-          });
+          setAllData(rendezvousCount);
+          filterRDVByYear(rendezvousCount, selectedYear);
+        } else {
+          console.error("Invalid or missing data format:", rendezvousCount);
         }
+
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -94,13 +87,30 @@ const MonthlyIncomeChart = () => {
 
   const filterDataByYear = (data, year) => {
     const filteredData = data.filter(entry => entry[1] === year);
-    const labels = filteredData.map(entry => `Month ${entry[0]}`);
+    const labels = filteredData.map(entry => `Mois ${entry[0]}`);
     const values = filteredData.map(entry => entry[2]);
 
     setChartData({
       labels: labels,
       datasets: [{
-        label: 'Monthly Income',
+        label: 'Revenu Mensuel',
+        data: values,
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+      }]
+    });
+  };
+
+  const filterRDVByYear = (data, year) => {
+    const filteredData = data.filter(entry => entry[1] === year);
+    const labels = filteredData.map(entry => `Mois ${entry[0]}`);
+    const values = filteredData.map(entry => entry[2]);
+
+    setRendezvousData({
+      labels: labels,
+      datasets: [{
+        label: 'Nombre RDV',
         data: values,
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
@@ -131,15 +141,17 @@ const MonthlyIncomeChart = () => {
 
   return (
     <Container className="container" component="main" style={{ width: "70%" }}>
-      <h2>Charts Overview</h2>
+      <h2>Statistiques</h2>
       <div>
-        <label htmlFor="yearSelector">Select Year: </label>
-        <select id="yearSelector" value={selectedYear} onChange={handleYearChange}>
+        <label htmlFor="yearSelector">Année: </label>
+        <select id="yearSelector" value={selectedYear} onChange={handleYearChange} >
           {years.map(year => (
             <option key={year} value={year}>{year}</option>
           ))}
         </select>
       </div>
+      <h3>Consultation par mois</h3>
+
       <Bar 
         data={chartData} 
         options={{
@@ -154,11 +166,14 @@ const MonthlyIncomeChart = () => {
         }} 
       />
       <div style={{ marginTop: '20px' ,width:'50%'}}>
-        <h3>Total Price: {totalPrice?.toFixed(2)}</h3>
+        <h3>Revenu Total: {totalPrice?.toFixed(2)}</h3>
         <Doughnut data={doughnutData} />
       </div>
       <div style={{ marginTop: '20px' ,width:'100%'}}>
-        <h3>Rendez-vous Count by Month</h3>
+        <h3>Rendez-vous par mois</h3>
+        <div>
+     
+      </div>
         <Bar 
           data={rendezvousData} 
           options={{
