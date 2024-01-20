@@ -17,11 +17,12 @@ import DossierMedicalAdd from './pages/DossierMedical/addDossierMedical/DossierM
 import DossierMedicalList from './pages/DossierMedical/ListDossierMedical/DossierMedicalList';
 import MonthlyIncomeChart from './pages/stat/MonthlyIncomeChart';
 import SignInSide from './pages/SignIn/SignIn';
+import WelcomePage from './pages/WelcomePage';
 
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
-
+  console.log("user aaaaaaaaaaa",user?.user?.authorities[0]?.authority)
   return (
     <div>
       {user?.jwt ? (
@@ -43,7 +44,13 @@ function App() {
               <Route path="/consultations/add-to-dossier/:dossierID" element={<ConsultationAdd />} />
               <Route path="/" element={<MonthlyIncomeChart />} />
               <Route path="/statistics" element={<MonthlyIncomeChart />} />
+              <Route path="/welcome" element={<WelcomePage />} />
+
+              {user?.user?.authorities[0]?.authority=="ADMIN" ?
               <Route path="*" element={<Navigate to="/" replace />} />
+              :
+              <Route path="*" element={<Navigate to="/welcome" replace />} />
+              }
             </Routes>
           </div>
         </Router>
