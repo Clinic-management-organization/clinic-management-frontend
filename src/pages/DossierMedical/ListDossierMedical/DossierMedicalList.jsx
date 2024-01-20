@@ -58,11 +58,10 @@ const DossierMedicalList = () => {
         }
         else {
            dossiersMedicauxData = await getAllDossiersMedicaux();
+		   
         }
-        console.log("dossiersMedicauxData", dossiersMedicauxData);
         // Vérifier si dossiersMedicauxData est un tableau
-        if (Array.isArray(dossiersMedicauxData)) {
-         
+        if (Array.isArray(dossiersMedicauxData)) {         
           //user?.patient?.id
           setDossiersMedicaux(dossiersMedicauxData);
         } else {
@@ -292,7 +291,6 @@ const DossierMedicalList = () => {
                 ))}
               </List>
 
-              {user?.authorities[0]?.authority=="ADMIN" &&
               <Button
                 className="btn-g"
                 onClick={() => addRDV(dossier?.id)}
@@ -309,7 +307,6 @@ const DossierMedicalList = () => {
                 Ajouter Rendez-vous
               </Button>
 
-              }
             </AccordionDetails>
           </Accordion>
         ))

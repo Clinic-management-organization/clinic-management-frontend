@@ -34,7 +34,6 @@ const MedecinAdd = () => {
     tel: "",
     email: "",
     specialite: "DERMATOLOGIE",
-    horaires: [],
   });
   const specialites = ["DERMATOLOGIE", , "GYNECOLOGIE", "OPHTALMOLOGIE"];
 
@@ -49,7 +48,7 @@ const MedecinAdd = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const info = new FormData(e.currentTarget);
-    const _formData = { ...formData, horaires };
+    const _formData = { ...formData, horaires:horaires };
 
     console.log("data", _formData);
     addMedecin(_formData).then(() => {

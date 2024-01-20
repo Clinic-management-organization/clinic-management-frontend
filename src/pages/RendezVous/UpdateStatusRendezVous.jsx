@@ -114,7 +114,6 @@ const UpdateStatusRendezVous = () => {
       <Typography component="h1" variant="h5" style={{ marginBottom: "3%" }}>
       {user?.authorities[0]?.authority=="ADMIN" ? "Modification de status des Rendez-Vous" :"Liste rendez-vous" }
       </Typography>
-     
     { user?.authorities[0]?.authority=="ADMIN" &&
       <div>
         <FormControl sx={{width: '30%', mr: 5}}>

@@ -56,9 +56,10 @@ const MonthlyIncomeChart = () => {
     const fetchData = async () => {
       try {
         const response = await getStatConsultation();
-        console.log("response",response)
         if (response && Array.isArray(response)) {
           setAllData(response);
+		          console.log("response",response);
+
           filterDataByYear(response, selectedYear);
         } else {
           console.error("Invalid or missing data format:", response);
@@ -66,12 +67,11 @@ const MonthlyIncomeChart = () => {
 
         const total = await getStatTotalConsultation();    
         setTotalPrice(total);
-        console.log(totalPrice);
 
         const rendezvousCount = await getStatRendezVous();
-        console.log("rendezvousCount",rendezvousCount)
         if (rendezvousCount && Array.isArray(rendezvousCount)) {
           setAllData(rendezvousCount);
+		  console.log("rendezvousCount", rendezvousCount)
           filterRDVByYear(rendezvousCount, selectedYear);
         } else {
           console.error("Invalid or missing data format:", rendezvousCount);
